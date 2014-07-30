@@ -1,0 +1,24 @@
+# default admin account
+def_admin_user: "admin"
+def_admin_pass: "klnm12"
+def_admin_email: "admin@musashi.com"
+
+user_mem: "pm"
+user_pa: "pa"
+user_admin: "admin"
+user_emailusername: "qa_musashi"
+user_emaildomain: "@musashi.ph"
+user_password: "12345678"
+user_project: "proj"
+
+res_instance: "inst"
+res_snapshot: "instsnap"
+res_secgroup: "secgroup"
+res_keypair: "keypair"
+res_volume: "vol"
+res_image: "cirros-0.3.2-x86_64"
+res_flavor: "m1.tiny"
+res_volume_size: "1"
+res_key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxB4afuoC+V3vJCqdMwRJHpPQconGbJb1ivfYNCbrqAFt3w4Od9yy7UEzGLUTQfOkDT6OFxf575f1nf5xXF7FdZ5D+WOZrFuozm6UVY2ejh0zaTFa7eRoNXGCXD7j+j22xUdZ2h3VmxD9akSqvJRvijYrIVL6wMDcibCspSRdc5tPk2Y2vuq+WJvLZ1365L9+n7IfvAm2mxFHhuVhBB6s1ZvktBdZCpllsiYjG7q+9Hf8kfgvNqWF6yzNsdGjNeAswb0MiAeQ7pIIhfAysl3ed+4wsddF2U+OCfiUYVYzAD/5+DUNPS2bYgk40mLWDk6dPDnrUsKc9GMnY6L/kvkzaw== kfajardo@musashi.ph"
+
+common_description: "test"
