@@ -125,13 +125,14 @@ module Common
     driver.find_element(:xpath, "//div[3]/button[2]").click
     wait.until { driver.find_element(:xpath, "//p[@ng-bind-html=\"alert.msgs\"]").displayed? }
     
+    sleep 20
     # wait for vol snap to finish creating
-    sleep 2
-    wait.until { driver.find_element(:css, "i.fa.fa-floppy-o").displayed? }
-    driver.find_element(:css, "i.fa.fa-floppy-o").click
-    sleep 5
-    assert !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr/td[normalize-space(text())=\"snapshot for #{ snapshot_name }\"]/..//td[normalize-space(text())=\"\"]/..//td[3]").text =~/available/) rescue false; sleep 3 }, "Timeout. Was not able to create a snapshot successfully."
-    puts "Helper: Successfully snapshotted instance #{ instance_name }"
+    #sleep 2
+    #wait.until { driver.find_element(:css, "i.fa.fa-floppy-o").displayed? }
+    #driver.find_element(:css, "i.fa.fa-floppy-o").click
+    #sleep 5
+    #assert !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr/td[normalize-space(text())=\"snapshot for #{ snapshot_name }\"]/..//td[normalize-space(text())=\"\"]/..//td[3]").text =~/available/) rescue false; sleep 3 }, "Timeout. Was not able to create a snapshot successfully."
+    #puts "Helper: Successfully snapshotted instance #{ instance_name }"
   end
   
   def deleteSnapshot(driver, snapshot_name)
