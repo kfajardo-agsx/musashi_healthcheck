@@ -31,8 +31,6 @@ RSpec.configure do |c|
           options[:password] = ENV['PASSWORD']
         end
       user    = ENV['USER']
-      options[:keys] = ENV['KEY']
-      options[:auth_methods] = ['publickey']
       c.ssh   = Net::SSH.start(host, user, options)
     end
   end

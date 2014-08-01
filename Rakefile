@@ -10,13 +10,14 @@ namespace 'HC' do
 
   desc "Check controller settings"
   task :serverspec do
-    system("HOST=203.177.9.123 USER=musashi ASK_LOGIN_PASSWORD=true ASK_SUDO_PASSWORD=true rake spec")
+    system("USER=ubuntu KEY=musashi.pem ASK_LOGIN_PASSWORD=true rake spec")
   end
 end
 
 desc "Run health checks"
 task :default => ["HC:serverspec", "HC:dashboard"]
 
+desc "Run serverspec"
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/*/*_spec.rb'
 end

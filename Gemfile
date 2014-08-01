@@ -3,6 +3,7 @@ source "https://rubygems.org"
 
 gem 'cucumber'
 gem 'rspec'
+gem 'rspec-its'
 gem 'selenium-webdriver'
 gem 'minitest'
 gem 'sqlite3'
