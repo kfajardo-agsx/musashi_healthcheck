@@ -10,8 +10,9 @@ namespace 'HC' do
 
   desc "Check controller settings"
   task :serverspec do
-    system("USER=ubuntu KEY=musashi.pem ASK_LOGIN_PASSWORD=true rake spec")
+    system("USER=ubuntu KEY=musashi.pem rake spec")
   end
+  
 end
 
 desc "Run health checks"
