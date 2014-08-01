@@ -1,15 +1,6 @@
 require 'spec_helper'
 
-
-# CHECK CONTROLLER FOR MINIMUM  REQUIREMENTS
-#describe file('/etc/network/interfaces') do
-#  it { should contain 'em1' }
-#end
-
-#describe command('date') do
-#  its(:stdout) { should match 'UTC' }
-#end
-
+# CHECK PACKAGES/SERVICES
 describe package('apache2') do
   it { should be_installed }
 end
@@ -18,7 +9,6 @@ describe service('apache2') do
   it { should be_running   }
 end
 
-# CHECK OPENSTACK PACKAGES/SERVICES
 describe package('mysql-server') do
   it { should be_installed }
 end
@@ -64,33 +54,6 @@ describe service('cinder-volume') do
   it { should be_enabled   }
   it { should be_running   }
 end
-
-#describe package('ceilometer-agent-central') do
-#  it { should be_installed }
-#end
-
-#describe service('ceilometer-agent-central') do
-#  it { should be_enabled   }
-#  it { should be_running   }
-#end
-
-#describe package('ceilometer-collector') do
-#  it { should be_installed }
-#end
-
-#describe service('ceilometer-collector') do
-#  it { should be_enabled   }
-#  it { should be_running   }
-#end
-
-#describe package('ceilometer-api') do
-#  it { should be_installed }
-#end
-
-#describe service('ceilometer-api') do
-#  it { should be_enabled   }
-#  it { should be_running   }
-#end
 
 describe service('nova-api') do
   it { should be_enabled   }
@@ -147,7 +110,3 @@ end
 describe port (9191) do
   it { should be_listening.with('tcp') }
 end
-
-#describe port (8777) do
-#  it { should be_listening.with('tcp') }
-#end
