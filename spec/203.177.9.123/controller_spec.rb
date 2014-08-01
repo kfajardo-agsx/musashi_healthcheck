@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # CHECK PACKAGES/SERVICES
-describe package('apache2') do
+describe package('apache2'), type: :feature do
   it { should be_installed }
 end
 

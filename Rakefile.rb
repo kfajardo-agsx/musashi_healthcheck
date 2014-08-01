@@ -10,9 +10,8 @@ namespace 'HC' do
 
   desc "Check controller settings"
   task :serverspec do
-    system("HOST=203.177.9.123 USER=musashi PASSWORD=sash1m1 rake spec")
+    system("HOST=203.177.9.123 USER=musashi PASSWORD=sash1m1 SUDO_PASSWORD=sash1m1 rake spec")
   end
-  
 end
 
 desc "Run health checks"
