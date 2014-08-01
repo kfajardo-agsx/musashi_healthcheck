@@ -26,8 +26,7 @@ module Common
     driver.find_element(:xpath, "//button[3]").click
     sleep 1
     # step 4
-    driver.find_element(:xpath, "//label[@ng-model=\"form.keypair_checked\"]").click
-    driver.find_element(:xpath, "//button[@ng-disabled=\"!form.keypair_checked\"]").click
+    driver.find_element(:xpath, "//button/span[normalize-space(text())=\"Generate a new key\"]").click
     driver.find_element(:xpath, "//li[normalize-space(text())=\"#{ keypair }\"]").click
     @driver.find_element(:xpath, "//button[3]").click
     sleep 1
@@ -125,14 +124,11 @@ module Common
     driver.find_element(:xpath, "//div[3]/button[2]").click
     wait.until { driver.find_element(:xpath, "//p[@ng-bind-html=\"alert.msgs\"]").displayed? }
     
-    sleep 20
-    # wait for vol snap to finish creating
-    #sleep 2
-    #wait.until { driver.find_element(:css, "i.fa.fa-floppy-o").displayed? }
-    #driver.find_element(:css, "i.fa.fa-floppy-o").click
-    #sleep 5
-    #assert !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr/td[normalize-space(text())=\"snapshot for #{ snapshot_name }\"]/..//td[normalize-space(text())=\"\"]/..//td[3]").text =~/available/) rescue false; sleep 3 }, "Timeout. Was not able to create a snapshot successfully."
-    #puts "Helper: Successfully snapshotted instance #{ instance_name }"
+    wait.until { driver.find_element(:css, "i.fa.fa-copy").displayed? }
+    driver.find_element(:css, "i.fa.fa-copy").click    
+   
+    assert !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed?) rescue false; sleep 3 }, "Timeout. Was not able to create a snapshot successfully."
+    puts "Helper: Successfully snapshotted instance #{ instance_name }"
   end
   
   def deleteSnapshot(driver, snapshot_name)
@@ -141,15 +137,15 @@ module Common
     # go to images page    
     wait.until { driver.find_element(:css, "i.fa.fa-copy").displayed? }
     driver.find_element(:css, "i.fa.fa-copy").click
-    
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed? }
+    wait.until { driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed? }
     sleep 2
-    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td/div/button").click
+
+    rows = driver.find_elements(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr").size
+    driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td[7]/div/button").click
     wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
+    driver.find_element(:xpath, "//*[@id=\"images-list\"]/div[2]/div/button[1]").click
     sleep 2
-    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was not able to delete the snapshot successfully."
+    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was not able to delete the snapshot successfully."
     puts "Helper: Successfully deleted snapshot #{ snapshot_name }"
   end
   

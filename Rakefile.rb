@@ -1,13 +1,23 @@
 require 'rake/testtask'
+require 'rspec/core/rake_task'
 
-namespace 'health_check' do
-  desc "Health Check for dashboard actions"
+namespace 'HC' do
+  desc "Check dashboard functions"
   task :dashboard do
-    file = "test_scripts/project_actions.rb"
-      system("ruby #{ file }")
+    file = "test_scripts/dashboard_actions.rb"
+    system("ruby #{ file }")
   end
+
+  desc "Check controller settings"
+  task :serverspec do
+    system("HOST=203.177.9.123 USER=musashi PASSWORD=sash1m1 rake spec")
+  end
+  
 end
 
-task :default do
-    system("rake health_check:dashboard")
+desc "Run health checks"
+task :default => ["HC:serverspec", "HC:dashboard"]
+
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = 'spec/*/*_spec.rb'
 end

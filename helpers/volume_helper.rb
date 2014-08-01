@@ -35,11 +35,12 @@ module Common
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").displayed? }
     driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").click
     
-    # select instance to attach to 
-    wait.until { driver.find_element(:xpath, "//*[@id=\"attachVolume\"]/div/select").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"attachVolume\"]/div/select").click
-    driver.find_element(:xpath, "//form[@id='attachVolume']/div/select/option[normalize-space(text())=\"#{ instance_name }\"]").click
-    driver.find_element(:xpath, "//div[3]/button[2]").click
+    # select instance to attach to
+    wait.until { driver.find_element(:xpath, "//*[@id=\"attachVolume\"]/div/div/div/button").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"attachVolume\"]/div/div/div/button").click
+    wait.until { driver.find_element(:link, instance_name).displayed? }
+    driver.find_element(:link, instance_name).click
+    driver.find_element(:xpath, "//button[normalize-space(text())=\"Attach\"]").click
     
     # wait until the volume is no longer in attaching status
     assert !180.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[4]").text =~ /in-use/) rescue false; sleep 2 }, "Timeout. Volume is taking too long to attach."
@@ -121,11 +122,9 @@ module Common
     waitForProcessingVolumeSnapshots(driver)
     rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr").size
     rows.downto(2) do |i|
-      driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[5]/div/button[2]/span").click
-      sleep 2
-      wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td/div/ul/li/a").displayed? }
-      driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td/div/ul/li/a").click
-      sleep 2
+      driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[7]/div/button[2]/span").click
+      wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[7]/div/ul/li/a").displayed? }
+      driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[7]/div/ul/li/a").click
       wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
       driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
       wait.until { driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr").size == (i - 1) }
@@ -138,7 +137,7 @@ module Common
     sleep 2
     rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr").size
     rows.downto(2) do |i|
-      !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[3]").text == ("available" || "error")) rescue false; sleep 2 }
+      !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[4]").text == ("available" || "error")) rescue false; sleep 2 }
     end
   end
   

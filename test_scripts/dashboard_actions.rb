@@ -1,7 +1,7 @@
 current_directory = File.expand_path(File.dirname(__FILE__))
 require current_directory + "/../test_helper"
 
-class ScenarioA < MiniTest::Test
+class DashboardActions < MiniTest::Test
 
   include Common::AuthenticationHelper
   include Common::UsersHelper
@@ -16,7 +16,7 @@ class ScenarioA < MiniTest::Test
   def setup
     @test_data = Data.config.test_data
     @config = Data.config.setup
-    @db = SQLite3::Database.new "testdb.db"
+    
     @driver = Selenium::WebDriver.for @config["test_browser"].to_sym
     @driver.get(@config["envi"] + "/")
     
@@ -28,8 +28,10 @@ class ScenarioA < MiniTest::Test
     @driver.quit
   end
   
-  def test_wholeOperation
+  def test_dashboardfunctions
     @driver.manage().window().maximize()
+    wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+    
     sec_rules = [ {from:"-1", to:"-1", ip:"0.0.0.0/0", protocol:"ICMP"},
                   {from:"443", to:"443", ip:"0.0.0.0/0", protocol:"TCP"},
                   {from:"161", to:"161", ip:"0.0.0.0/0", protocol:"UDP"},
@@ -37,125 +39,75 @@ class ScenarioA < MiniTest::Test
                   {from:"80", to:"80", ip:"0.0.0.0/0", protocol:"TCP"}
                 ]
     
-    # PM logs in to create resources
     puts "Logging in PM ..... "
-    login(@driver, @test_data["user_mem"], @test_data["user_password"])
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"head-project-name\"]/span/span").text == @test_data["user_project"] + 0.to_s }
+    login(@driver, @test_data["user_mem"], @test_data["user_password"], @test_data["user_project"])
     puts "PM has accessed project successfully.\n"
-
-    puts "Creating some access page resources..."
+    puts "\nCreating some access page resources..."
     import_keypair(@driver, @test_data["res_keypair"], @test_data["res_key"])
-    puts "Keypair created."
-    
     create_secgroup(@driver, @test_data["res_secgroup"], @test_data["common_description"])
-    puts "Secgroup created."
-    
     custom_rule(@driver, @test_data["res_secgroup"], sec_rules)
-    puts "Added rules to secgroup."
-    
     allocateIP(@driver)
-    puts "IP allocated.\n"
-    
-    puts "Creating a VM and a snapshot..."
+    puts "\nCreating a VM and a snapshot..."
     createInstance(@driver, @test_data["res_instance"], @test_data["res_flavor"], @test_data["res_image"], "default", @test_data["res_keypair"])
-    puts "Instance created."
-    
     createVolume(@driver, @test_data["res_volume"], @test_data["common_description"], @test_data["res_volume_size"].to_i)
-    puts "Volume created."
-    
     attachVolume(@driver, @test_data["res_volume"], @test_data["res_instance"])
-    puts "Volume attached."
-    
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
     wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
     ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
     attachIP(@driver, @test_data["res_instance"], ip)
-    puts "IP attached to instance."
-    
     createSnapshot(@driver, @test_data["res_instance"],  @test_data["res_snapshot"])
-    puts "Instance snapshot created.\n"
     logout(@driver)
     puts "PM has logged out."
     
-    puts "Logging in PA ..... "
+    puts "\nLogging in PA ..... "
     # PA logs in to check and delete resources
-    login(@driver, @test_data["user_pa"], @test_data["user_password"])
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"head-project-name\"]/span/span").text == @test_data["user_project"] + 0.to_s }
+    login(@driver, @test_data["user_pa"], @test_data["user_password"], @test_data["user_project"])
     puts "PA has accessed project successfully.\n"
- 
-    puts "Performing some instance actions..."
+    puts "\nPerforming some instance actions..."
     warning = 30
     error = 60
     update_instance_monitoring(@driver, @test_data["res_instance"], warning, error)
-    puts "Updated instance monitoring thresholds."
-    
     stopInstance(@driver, @test_data["res_instance"])
-    puts "Stopped instance."
-    
-    puts "Giving instance enough downtime before restarting...."
+    puts "\nGiving instance enough downtime before restarting...."
     sleep 90    
-    puts "Restarting instance now."
-    
+    puts "\nRestarting instance now."
     startInstance(@driver, @test_data["res_instance"])
-    puts "Restarted instance.\n"
-
-    puts "Cleaning up project...."
+    logout(@driver)
+    puts "PA has logged out."
     
-    detachVolume(@driver, @test_data["res_volume"] + i.to_s)
-    puts "Detached volume."
-    
-    detachIP(@driver, @test_data["res_instance"] + i.to_s)
-    puts "Detached IP."
-    
+    puts "\nLogging in PM ..... "
+    login(@driver, @test_data["user_mem"], @test_data["user_password"], @test_data["user_project"])
+    puts "PM has accessed project successfully.\n"
+    puts "\nCleaning up project...."
+    detachVolume(@driver, @test_data["res_volume"])
+    detachIP(@driver, @test_data["res_instance"])
     deleteAllVolumeSnapshots(@driver)
-    puts "Cleaned up volume snapshots."
-    
-    deleteVolume(@driver, @test_data["res_volume"] + i.to_s)
-    puts "Deleted volume."
-    
-    deleteSnapshot(@driver,  @test_data["res_snapshot"])
-    puts "Deleted instance snapshot./n"
-     
-    deleteInstance(@driver, @test_data["res_instance"])
-    puts "Deleted instance."
-    
+    deleteVolume(@driver, @test_data["res_volume"])
     delete_keypair(@driver, @test_data["res_keypair"])
-    puts "Deleted keypair."
-
-    delete_secgroup(@driver, @test_data["res_secgroup"])
-    puts "Deleted secgroup."
+    logout(@driver)
+    puts "PM has logged out."
     
+    puts "\nLogging in PA and continue cleaning up ..... "
+    login(@driver, @test_data["user_pa"], @test_data["user_password"], @test_data["user_project"])
+    puts "PA has accessed project successfully.\n"
+    deleteSnapshot(@driver,  @test_data["res_snapshot"])
+    deleteInstance(@driver, @test_data["res_instance"])
+    delete_secgroup(@driver, @test_data["res_secgroup"])
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    for i in loop_start..loop_end
-      wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-      ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
-      disallocateIP(@driver, ip)
-    end
-    puts "Released floating IP."
-    
+    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
+    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    disallocateIP(@driver, ip)
     delete_member(@driver, @test_data["user_mem"])
-    puts "Deleted PM."
-    sleep 10
     logout(@driver)
-    puts "Cleaned up project. PA has logged out."
+    puts "PA has logged out."
 
 
-    puts "Logging in admin ..... "
+    puts "\nLogging in admin ..... "
     login(@driver, @admin_account, @admin_pass)
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-mainbar\"]/div/div[2]/ul[2]/li[1]/span").text =~ /SYSTEM ADMIN/ }
-    
-    ## DELETE PROJECTS/PAS
-    #pa_result = @db.execute("select pa from userindex").first.map(&:to_i)
-    #current_pa_index = pa_result[0]
-    #last_pa_index = current_pa_index + loop_end
-    #for i in current_pa_index..last_pa_index
-    #  delete_pa(@driver, @test_data["user_pa"] + i.to_s)
-    #end
-    #@db.execute "update userindex set pa=?", last_pa_index + 1
-    #puts "Deleted #{ loop_end } project admins and their projects."
-    logout(@driver)
+    delete_pa(@driver, @test_data["user_pa"])
+    logout(@driver, "admin")
   end
 
 end

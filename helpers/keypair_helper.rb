@@ -21,16 +21,18 @@ module Common
     puts "Helper: Successfully imported keypair #{ res_keypair }"
   end
 
-  def delete_keypair(driver, res_keypair)		
+  def delete_keypair(driver, res_keypair)
+		wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+		
     !60.times{ break if (driver.find_element(:css, "i.fa.fa-lock").displayed? rescue false); sleep 1 }
     driver.find_element(:css, "i.fa.fa-lock").click
     !60.times{ break if (driver.find_element(:xpath, "//tr[@class=\"ng-scope\"]/td[normalize-space(text())=\"#{ res_keypair }\"]").displayed? rescue false); sleep 1 }
     sleep 2
     rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[3]/tbody/tr").size
     driver.find_element(:xpath, "//tr[@class=\"ng-scope\"]/td[normalize-space(text())=\"#{ res_keypair }\"]/../td[3]/div/button").click
-    !60.times{ break if (driver.find_element(:xpath, "(//button[@type='button'])[2]").displayed? rescue false); sleep 1 }
-    driver.find_element(:xpath, "(//button[@type='button'])[2]").click
     
+    wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/div/button[1]").click
     sleep 2
     assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[3]/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was unable to delete a keypair successfully."    
     puts "Helper: Successfully deleted keypair #{ res_keypair }"
