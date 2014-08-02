@@ -17,7 +17,16 @@ namespace 'HC' do
   task :serverspecpassword do
     system("USER=#{ENV['USER']} ASK_SUDO_PASSWORD=true ASK_LOGIN_PASSWORD=true rake spec")
   end
-  
+
+  desc "Check controller settings, include USER and KEY on command"
+  task :createuserprojkey do
+    system("USER=#{ENV['USER']} KEY=#{ENV['KEY']} rake dbinjection")
+  end
+
+  desc "Run nova commands before dashboard actions, include USER on command"
+  task :createuserprojpassword do
+    system("USER=#{ENV['USER']} ASK_SUDO_PASSWORD=true ASK_LOGIN_PASSWORD=true rake dbinjection")
+  end  
 end
 
 task :default do
@@ -27,4 +36,9 @@ end
 desc "Run serverspec"
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/*/*_spec.rb'
+end
+
+desc "Run db injection"
+RSpec::Core::RakeTask.new(:dbinjection) do |t|
+  t.pattern = 'spec/*/*_command.rb'
 end

@@ -46,16 +46,17 @@ class DashboardActions < MiniTest::Test
     import_keypair(@driver, @test_data["res_keypair"], @test_data["res_key"])
     create_secgroup(@driver, @test_data["res_secgroup"], @test_data["common_description"])
     custom_rule(@driver, @test_data["res_secgroup"], sec_rules)
-    allocateIP(@driver)
+    #allocateIP(@driver)
+    
     puts "\nCreating a VM and a snapshot..."
     createInstance(@driver, @test_data["res_instance"], @test_data["res_flavor"], @test_data["res_image"], "default", @test_data["res_keypair"])
     createVolume(@driver, @test_data["res_volume"], @test_data["common_description"], @test_data["res_volume_size"].to_i)
     attachVolume(@driver, @test_data["res_volume"], @test_data["res_instance"])
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
-    attachIP(@driver, @test_data["res_instance"], ip)
+    #wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
+    #ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    #attachIP(@driver, @test_data["res_instance"], ip)
     createSnapshot(@driver, @test_data["res_instance"],  @test_data["res_snapshot"])
     logout(@driver)
     puts "PM has logged out."
@@ -81,7 +82,7 @@ class DashboardActions < MiniTest::Test
     puts "PM has accessed project successfully.\n"
     puts "\nCleaning up project...."
     detachVolume(@driver, @test_data["res_volume"])
-    detachIP(@driver, @test_data["res_instance"])
+    #detachIP(@driver, @test_data["res_instance"])
     deleteAllVolumeSnapshots(@driver)
     deleteVolume(@driver, @test_data["res_volume"])
     delete_keypair(@driver, @test_data["res_keypair"])
@@ -96,9 +97,9 @@ class DashboardActions < MiniTest::Test
     delete_secgroup(@driver, @test_data["res_secgroup"])
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
-    disallocateIP(@driver, ip)
+    #wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
+    #ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    #disallocateIP(@driver, ip)
     delete_member(@driver, @test_data["user_mem"])
     logout(@driver)
     puts "PA has logged out."
