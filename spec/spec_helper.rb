@@ -1,17 +1,11 @@
-current_directory = File.expand_path(File.dirname(__FILE__) )
-
 require 'serverspec'
 require 'pathname'
 require 'net/ssh'
 require 'highline/import'
-require 'yaml'
 
 include Serverspec::Helper::Ssh
 include Serverspec::Helper::DetectOS
 include Serverspec::Helper::Properties
-
-config = YAML::load_file(current_directory + "/../helpers/config/setup.yml")
-test_data = YAML::load_file(current_directory + "/../helpers/config/test_data.yml")
 
 RSpec.configure do |c|
   c.before :all do
@@ -41,9 +35,8 @@ RSpec.configure do |c|
         options[:keys] = ENV['KEY']
         options[:auth_methods] = ['publickey']
       end
-
       user    = ENV['USER']
-      c.ssh   = Net::SSH.start(host, user, options)
+      c.ssh   = Net::SSH.start(c.host, user, options)
     end
   end
 end

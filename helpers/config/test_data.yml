@@ -10,6 +10,8 @@ user_emailusername: "qa_musashi"
 user_emaildomain: "@musashi.ph"
 user_password: "12345678"
 user_project: "proj0"
+user_pool: "proj0_pool"
+user_pool_ip_range: "143.1.143.1/29"
 
 res_instance: "inst"
 res_snapshot: "instsnap"
@@ -22,3 +24,7 @@ res_volume_size: "1"
 res_key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxB4afuoC+V3vJCqdMwRJHpPQconGbJb1ivfYNCbrqAFt3w4Od9yy7UEzGLUTQfOkDT6OFxf575f1nf5xXF7FdZ5D+WOZrFuozm6UVY2ejh0zaTFa7eRoNXGCXD7j+j22xUdZ2h3VmxD9akSqvJRvijYrIVL6wMDcibCspSRdc5tPk2Y2vuq+WJvLZ1365L9+n7IfvAm2mxFHhuVhBB6s1ZvktBdZCpllsiYjG7q+9Hf8kfgvNqWF6yzNsdGjNeAswb0MiAeQ7pIIhfAysl3ed+4wsddF2U+OCfiUYVYzAD/5+DUNPS2bYgk40mLWDk6dPDnrUsKc9GMnY6L/kvkzaw== kfajardo@musashi.ph"
 
 common_description: "test"
+
+# keystone authentication
+os_auth_url: "http://mc.musashi.ph:35357/v2.0"
+os_tenant_name: "admin"

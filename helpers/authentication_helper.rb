@@ -27,11 +27,13 @@ module Common
     if role!="admin"
       wait.until { driver.find_element(:css, "i.fa.fa-hdd-o").displayed? }
       driver.find_element(:css, "i.fa.fa-hdd-o").click
+      sleep 2
       wait.until { driver.find_element(:link_text, "Logout").displayed? }
       driver.find_element(:link_text, "Logout").click      
     else
       wait.until { driver.find_element(:css, "i.fa.fa-bar-chart-o").displayed? }
       driver.find_element(:css, "i.fa.fa-bar-chart-o").click
+      sleep 2
       wait.until { driver.find_element(:link_text, "Logout").displayed? }
       driver.find_element(:link_text, "Logout").click      
     end

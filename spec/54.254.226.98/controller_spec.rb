@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'rspec/its'
 
 # CHECK PACKAGES/SERVICES
 describe package('apache2')  do

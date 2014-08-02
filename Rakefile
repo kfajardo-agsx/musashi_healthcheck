@@ -2,29 +2,27 @@ require 'rake/testtask'
 require 'rspec/core/rake_task'
 
 namespace 'HC' do
-  desc "Check dashboard functions"
+  desc "Check dashboard functions, include environment options on command"
   task :dashboard do
     file = "test_scripts/dashboard_actions.rb"
+    system("rake dbinjection")
     system("ruby #{ file }")
   end
 
-  desc "Check controller settings, include USER and KEY on command"
-  task :serverspeckey do
-    system("USER=#{ENV['USER']} KEY=#{ENV['KEY']} rake spec")
+  desc "Check host settings, include environment options on command"
+  task :serverspec do
+    system("rake spec")
   end
-  
-  desc "Check controller settings, include USER on command"
-  task :serverspecpassword do
-    system("USER=#{ENV['USER']} ASK_SUDO_PASSWORD=true ASK_LOGIN_PASSWORD=true rake spec")
-  end
-  
 end
 
 task :default do
     puts("Please run \'rake -T\' to see possible rake commands")
 end
 
-desc "Run serverspec"
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/*/*_spec.rb'
+end
+
+RSpec::Core::RakeTask.new(:dbinjection) do |t|
+  t.pattern = 'spec/*/*_command.rb'
 end
