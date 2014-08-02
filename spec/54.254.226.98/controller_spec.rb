@@ -110,7 +110,3 @@ end
 describe port (9191) do
   it { should be_listening.with('tcp') }
 end
-
-describe command('whoami') do
-  it { should return_stdout 'root' }
-end

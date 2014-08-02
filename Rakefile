@@ -8,15 +8,21 @@ namespace 'HC' do
     system("ruby #{ file }")
   end
 
-  desc "Check controller settings"
-  task :serverspec do
-    system("USER=ubuntu KEY=musashi.pem rake spec")
+  desc "Check controller settings, include USER and KEY on command"
+  task :serverspeckey do
+    system("USER=#{ENV['USER']} KEY=#{ENV['KEY']} rake spec")
+  end
+  
+  desc "Check controller settings, include USER on command"
+  task :serverspecpassword do
+    system("USER=#{ENV['USER']} ASK_SUDO_PASSWORD=true ASK_LOGIN_PASSWORD=true rake spec")
   end
   
 end
 
-desc "Run health checks"
-task :default => ["HC:serverspec", "HC:dashboard"]
+task :default do
+    puts("Please run \'rake -T\' to see possible rake commands")
+end
 
 desc "Run serverspec"
 RSpec::Core::RakeTask.new(:spec) do |t|
