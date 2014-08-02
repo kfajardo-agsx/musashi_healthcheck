@@ -18,21 +18,24 @@ module Common
     driver.find_element(:xpath, "//button[3]").click
     sleep 1
     # step 2
-    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[2]/div/span/p[normalize-space(text())=\"#{ size }\"]/..//p[\"flavor ng-binding\"]").click
+    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[2]/div/span/span/p[normalize-space(text())=\"#{ size }\"]/..//span").click
     driver.find_element(:xpath, "//button[3]").click
-    sleep 1
+    sleep 2
     # step 3
-    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[3]/table/tbody/tr/td[normalize-space(text())=\"#{ image }\"]").click
+    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[3]/div/div[1]/div/div/button/span[2]").click
+    wait.until { driver.find_element(:link, image).displayed? }
+    driver.find_element(:link, image).click
     driver.find_element(:xpath, "//button[3]").click
     sleep 1
     # step 4
-    driver.find_element(:xpath, "//button/span[normalize-space(text())=\"Generate a new key\"]").click
-    driver.find_element(:xpath, "//li[normalize-space(text())=\"#{ keypair }\"]").click
+    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[4]/div[4]/div/div/button/span[2]").click
+    wait.until { driver.find_element(:xpath, "//li/a/span[normalize-space(text())=\"#{ keypair }\"]").displayed? }
+    driver.find_element(:xpath, "//li/a/span[normalize-space(text())=\"#{ keypair }\"]").click
     @driver.find_element(:xpath, "//button[3]").click
     sleep 1
     # step 5
     wait.until { driver.find_element(:xpath, "//td[normalize-space(text())=\"#{ name }\"]").displayed? }
-    @driver.find_element(:xpath, "//button[3]").click   
+    driver.find_element(:xpath, "//button[normalize-space(text())=\"Launch\"]").click   
 
     # wait until the status of instance is no longer BUILD
     !60.times{ break if !(driver.find_element(:xpath, "//div[@window-class=\"wizard-modal\"]").displayed? rescue false); sleep 1 }

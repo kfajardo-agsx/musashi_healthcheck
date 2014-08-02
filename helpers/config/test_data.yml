@@ -10,6 +10,8 @@ user_emailusername: "qa_musashi"
 user_emaildomain: "@musashi.ph"
 user_password: "12345678"
 user_project: "proj0"
+user_pool: "proj0_pool"
+user_pool_ip_range: "143.1.143.1/29"
 
 res_instance: "inst"
 res_snapshot: "instsnap"

@@ -38,7 +38,15 @@ class DashboardActions < MiniTest::Test
                   {from:"22", to:"22", ip:"0.0.0.0/0", protocol:"TCP"},
                   {from:"80", to:"80", ip:"0.0.0.0/0", protocol:"TCP"}
                 ]
-    
+    puts "Logging in Admin account ..... "
+    login(@driver, @admin_account, @admin_pass)
+    puts "Admin has accessed dashboard successfully.\n"
+    puts "Creating IPs for project under test..."
+    createPool(@driver, @test_data["user_pool"], @test_data["user_pool_ip_range"])
+    assignPooltoProject(@driver, @test_data["user_pool"], @test_data["user_project"])
+    logout(@driver, "admin")
+    puts "Admin has logged out.\n"
+
     puts "Logging in PM ..... "
     login(@driver, @test_data["user_mem"], @test_data["user_password"], @test_data["user_project"])
     puts "PM has accessed project successfully.\n"
@@ -46,7 +54,7 @@ class DashboardActions < MiniTest::Test
     import_keypair(@driver, @test_data["res_keypair"], @test_data["res_key"])
     create_secgroup(@driver, @test_data["res_secgroup"], @test_data["common_description"])
     custom_rule(@driver, @test_data["res_secgroup"], sec_rules)
-    #allocateIP(@driver)
+    allocateIP(@driver)
     
     puts "\nCreating a VM and a snapshot..."
     createInstance(@driver, @test_data["res_instance"], @test_data["res_flavor"], @test_data["res_image"], "default", @test_data["res_keypair"])
@@ -54,10 +62,11 @@ class DashboardActions < MiniTest::Test
     attachVolume(@driver, @test_data["res_volume"], @test_data["res_instance"])
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    #wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    #ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
-    #attachIP(@driver, @test_data["res_instance"], ip)
+    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
+    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    attachIP(@driver, @test_data["res_instance"], ip)
     createSnapshot(@driver, @test_data["res_instance"],  @test_data["res_snapshot"])
+    sleep 3
     logout(@driver)
     puts "PM has logged out."
     
@@ -74,6 +83,7 @@ class DashboardActions < MiniTest::Test
     sleep 90    
     puts "\nRestarting instance now."
     startInstance(@driver, @test_data["res_instance"])
+    sleep 3
     logout(@driver)
     puts "PA has logged out."
     
@@ -82,10 +92,11 @@ class DashboardActions < MiniTest::Test
     puts "PM has accessed project successfully.\n"
     puts "\nCleaning up project...."
     detachVolume(@driver, @test_data["res_volume"])
-    #detachIP(@driver, @test_data["res_instance"])
+    detachIP(@driver, @test_data["res_instance"])
     deleteAllVolumeSnapshots(@driver)
     deleteVolume(@driver, @test_data["res_volume"])
     delete_keypair(@driver, @test_data["res_keypair"])
+    sleep 3
     logout(@driver)
     puts "PM has logged out."
     
@@ -97,17 +108,21 @@ class DashboardActions < MiniTest::Test
     delete_secgroup(@driver, @test_data["res_secgroup"])
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    #wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    #ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
-    #disallocateIP(@driver, ip)
+    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
+    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    disallocateIP(@driver, ip)
     delete_member(@driver, @test_data["user_mem"])
+    sleep 3
     logout(@driver)
     puts "PA has logged out."
-
-
+    
+    
     puts "\nLogging in admin ..... "
     login(@driver, @admin_account, @admin_pass)
     delete_pa(@driver, @test_data["user_pa"])
+    sleep 3
+    deletePool(@driver,  @test_data["user_pool"])
+    sleep 5
     logout(@driver, "admin")
   end
 

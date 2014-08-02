@@ -78,5 +78,68 @@ module Common
     puts "Helper: Successfully released floating IP #{ ip }"
   end
 
+  def createPool(driver, pool_name, ip_range)
+	  wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+    
+    wait.until { driver.find_element(:css, "i.fa.fa-sitemap").displayed? }
+    driver.find_element(:css, "i.fa.fa-sitemap").click
+    
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[3]/div[2]/button").displayed? }
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").displayed? }
+    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[3]/div[2]/button").click
+    
+    wait.until { driver.find_element(:xpath, "//*[@id=\"displayName\"]").displayed? }
+    
+    driver.find_element(:id, "displayName").clear
+    driver.find_element(:id, "displayName").send_keys(pool_name)
+    driver.find_element(:id, "displayIpRange").clear
+    driver.find_element(:id, "displayIpRange").send_keys(ip_range)
+    driver.find_element(:xpath, "//div[3]/button[2]").click
+    
+    assert !60.times{ break if ((driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows+1)) rescue false); sleep 1 }, "Timeout. Was not able to create an IP Pool successfully."
+    puts "Helper: Successfully created an IP pool"
+	end
+  
+  def deletePool(driver, pool_name)
+	  wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+    
+    wait.until { driver.find_element(:css, "i.fa.fa-sitemap").displayed? }
+    driver.find_element(:css, "i.fa.fa-sitemap").click
+    
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[3]/div[2]/button").displayed? }
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").displayed? }
+    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size
+    
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[2]/span").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[2]/span").click
+    wait.until { driver.find_element(:link, "Delete").displayed? }
+    driver.find_element(:link, "Delete").click
+    sleep 2
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
+    
+    assert !60.times{ break if ((driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows-1)) rescue false); sleep 1 }, "Timeout. Was not able to create an IP Pool successfully."
+    puts "Helper: Successfully deleted an IP pool"
+	end
+  
+  def assignPooltoProject(driver, pool_name, project_name)
+	  wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+    
+    wait.until { driver.find_element(:css, "i.fa.fa-sitemap").displayed? }
+    driver.find_element(:css, "i.fa.fa-sitemap").click
+    
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[3]/div[2]/button").displayed? }
+    
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/button/span[2]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/button/span[2]").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/ul/li/a/span[normalize-space(text())=\"#{ project_name }\"]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/ul/li/a/span[normalize-space(text())=\"#{ project_name }\"]").click
+    
+    assert !60.times{ break if ((driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[1]/div/div/p/p").text == "Successful association of project for " + pool_name + ".") rescue false); sleep 1 }, "Timeout. Was not able to assign an IP Pool to project successfully."
+    puts "Helper: Successfully assigned pool to project"
+	end
+  
+  
   end
 end
