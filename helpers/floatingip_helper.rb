@@ -109,6 +109,7 @@ module Common
     
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[3]/div[2]/button").displayed? }
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").displayed? }
+    sleep 3
     rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size
     
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[2]/span").displayed? }
@@ -119,7 +120,7 @@ module Common
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").displayed? }
     driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
     
-    assert !60.times{ break if ((driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows-1)) rescue false); sleep 1 }, "Timeout. Was not able to create an IP Pool successfully."
+    assert !60.times{ break if ((driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows-1)) rescue false); sleep 1 }, "Timeout. Was not able to delete an IP Pool successfully."
     puts "Helper: Successfully deleted an IP pool"
 	end
   

@@ -50,7 +50,7 @@ module Common
     addRule(driver, sec_rules)
     
     driver.find_element(:css, "body > div.modal.fade.dash-width-500.in > div > div > div.modal-footer.ng-scope > button.btn.btn-primary.ng-binding").click  
-    wait.until { !(driver.find_element(:id, "form-manage-sec-group").displayed?)}
+    #wait.until { !(driver.find_element(:id, "form-manage-sec-group").displayed?)}
     puts "Helper: Successfully added custom rules to #{ res_secgroup }"
   end
   

@@ -116,7 +116,6 @@ class DashboardActions < MiniTest::Test
     logout(@driver)
     puts "PA has logged out."
     
-    
     puts "\nLogging in admin ..... "
     login(@driver, @admin_account, @admin_pass)
     delete_pa(@driver, @test_data["user_pa"])
