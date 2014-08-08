@@ -71,6 +71,26 @@ describe service('nova-conductor') do
   it { should be_running   }
 end
 
+describe service('graphite') do
+  it { should be_running   }
+end
+
+describe service('riemann') do
+  it { should be_running   }
+end
+
+describe service('logstash') do
+  it { should be_running   }
+end
+
+describe service('dashboard') do
+  it { should be_running   }
+end
+
+describe package('mariadb') do
+  it { should be_installed }
+end
+
 # CHECK DEFAULT PORTS
 describe port (3306) do
   it { should be_listening.with('tcp') }
@@ -110,4 +130,28 @@ end
 
 describe port (9191) do
   it { should be_listening.with('tcp') }
+end
+
+describe port (80) do #apache2
+  it { should be_listening.with('tcp6') }
+end
+
+describe port (81) do #dashboard via docker
+  it { should be_listening.with('tcp6') }
+end
+
+describe port (514) do #logstash
+  it { should be_listening.with('tcp6') }
+end
+
+describe port (3307) do #mariadb
+  it { should be_listening.with('tcp6') }
+end
+
+describe port (5555) do #riemann
+  it { should be_listening.with('tcp6') }
+end
+
+describe port (2003) do #graphite
+  it { should be_listening.with('tcp6') }
 end
