@@ -155,3 +155,19 @@ end
 describe port (2003) do #graphite
   it { should be_listening.with('tcp6') }
 end
+
+describe port (3260) do #iSCI
+  it { should be_listening.with('tcp') }
+end
+
+describe port (4369) do #rabbitmq
+  it { should be_listening.with('tcp') }
+end
+
+describe port (11211) do #memcached
+  it { should be_listening.with('tcp') }
+end
+
+describe port (6379) do #redis-server
+  it { should be_listening.with('tcp') }
+end
