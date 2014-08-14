@@ -87,9 +87,9 @@ describe service('dashboard') do
   it { should be_running   }
 end
 
-describe package('mariadb') do
-  it { should be_installed }
-end
+#describe package('mariadb') do
+#  it { should be_installed }
+#end
 
 # CHECK DEFAULT PORTS
 describe port (3306) do

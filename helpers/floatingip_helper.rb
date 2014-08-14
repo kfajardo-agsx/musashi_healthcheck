@@ -111,7 +111,7 @@ module Common
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").displayed? }
     sleep 3
     rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size
-    
+
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[2]/span").displayed? }
     driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[2]/span").click
     wait.until { driver.find_element(:link, "Delete").displayed? }
@@ -131,13 +131,17 @@ module Common
     driver.find_element(:css, "i.fa.fa-sitemap").click
     
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[3]/div[2]/button").displayed? }
+   
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[1]").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"form-assign-pool\"]/div/div/div/button").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"form-assign-pool\"]/div/div/div/button").click
     
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/button/span[2]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/button/span[2]").click
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/ul/li/a/span[normalize-space(text())=\"#{ project_name }\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[2]/div/div/ul/li/a/span[normalize-space(text())=\"#{ project_name }\"]").click
-    
-    assert !60.times{ break if ((driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[1]/div/div/p/p").text == "Successful association of project for " + pool_name + ".") rescue false); sleep 1 }, "Timeout. Was not able to assign an IP Pool to project successfully."
+    wait.until { driver.find_element(:link, project_name).displayed? }
+    driver.find_element(:link, project_name).click
+    driver.find_element(:xpath, "//button[normalize-space(text())=\"Update\"]").click
+
+    assert !60.times{ break if ((driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[1]/div/div/p/p").text == "Successfully assigned " + pool_name + " to " + project_name) rescue false); sleep 1 }, "Timeout. Was not able to assign an IP Pool to project successfully."
     puts "Helper: Successfully assigned pool to project"
 	end
   

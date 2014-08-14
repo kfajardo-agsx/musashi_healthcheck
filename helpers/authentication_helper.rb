@@ -15,7 +15,7 @@ module Common
       wait.until { driver.find_element(:xpath, "//*[@id=\"head-project-name\"]").text == project }
       assert !60.times{ break if (driver.find_element(:xpath, "//*[@id=\"dash-mainbar\"]/div/div[2]/ul[3]/li[2]/a").displayed? rescue false); sleep 1 }, "Unable to login account."
     else
-      assert !60.times{ break if (driver.find_element(:xpath, "//*[@id=\"dash-mainbar\"]/div/div[2]/ul[2]/li[3]/a").displayed? rescue false); sleep 1 }, "Unable to login account."
+      assert !60.times{ break if (driver.find_element(:xpath, "//*[@id=\"dash-mainbar\"]/div/div[2]/ul[3]/li[3]/a").displayed? rescue false); sleep 1 }, "Unable to login account."
     end
     
     puts "Helper: Successfully logged in #{ username }"

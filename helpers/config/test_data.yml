@@ -26,5 +26,5 @@ res_key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxB4afuoC+V3vJCqdMwRJHpPQconGbJb1iv
 common_description: "test"
 
 # keystone authentication
-os_auth_url: "http://mc1.musashi.ph:35357/v2.0"
+os_auth_url: "http://techbar-mc.musashi.ph:35357/v2.0"
 os_tenant_name: "admin"
