@@ -142,7 +142,7 @@ module Common
     driver.find_element(:css, "i.fa.fa-copy").click
     wait.until { driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed? }
     sleep 2
-
+    wait.until { driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td[7]/div/button").displayed? }
     rows = driver.find_elements(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr").size
     driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td[7]/div/button").click
     wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }

@@ -52,19 +52,26 @@ class DashboardActions < MiniTest::Test
     puts "PM has accessed project successfully.\n"
     puts "\nCreating some access page resources..."
     import_keypair(@driver, @test_data["res_keypair"], @test_data["res_key"])
+    sleep 2
     create_secgroup(@driver, @test_data["res_secgroup"], @test_data["common_description"])
+    sleep 2
     custom_rule(@driver, @test_data["res_secgroup"], sec_rules)
+    sleep 2
     allocateIP(@driver)
-    
+    sleep 2
     puts "\nCreating a VM and a snapshot..."
     createInstance(@driver, @test_data["res_instance"], @test_data["res_flavor"], @test_data["res_image"], "default", @test_data["res_keypair"])
+    sleep 2
     createVolume(@driver, @test_data["res_volume"], @test_data["common_description"], @test_data["res_volume_size"].to_i)
+    sleep 2
     attachVolume(@driver, @test_data["res_volume"], @test_data["res_instance"])
+    sleep 2
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
     wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
     ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
     attachIP(@driver, @test_data["res_instance"], ip)
+    sleep 2
     createSnapshot(@driver, @test_data["res_instance"],  @test_data["res_snapshot"])
     sleep 3
     logout(@driver)
@@ -74,10 +81,12 @@ class DashboardActions < MiniTest::Test
     # PA logs in to check and delete resources
     login(@driver, @test_data["user_pa"], @test_data["user_password"], @test_data["user_project"])
     puts "PA has accessed project successfully.\n"
+    sleep 5
     puts "\nPerforming some instance actions..."
     warning = 30
     error = 60
     update_instance_monitoring(@driver, @test_data["res_instance"], warning, error)
+    sleep 2
     stopInstance(@driver, @test_data["res_instance"])
     puts "\nGiving instance enough downtime before restarting...."
     sleep 90    
@@ -92,9 +101,13 @@ class DashboardActions < MiniTest::Test
     puts "PM has accessed project successfully.\n"
     puts "\nCleaning up project...."
     detachVolume(@driver, @test_data["res_volume"])
+    sleep 2
     detachIP(@driver, @test_data["res_instance"])
+    sleep 2
     deleteAllVolumeSnapshots(@driver)
+    sleep 2
     deleteVolume(@driver, @test_data["res_volume"])
+    sleep 2
     delete_keypair(@driver, @test_data["res_keypair"])
     sleep 3
     logout(@driver)
@@ -103,14 +116,19 @@ class DashboardActions < MiniTest::Test
     puts "\nLogging in PA and continue cleaning up ..... "
     login(@driver, @test_data["user_pa"], @test_data["user_password"], @test_data["user_project"])
     puts "PA has accessed project successfully.\n"
+    sleep 5 
     deleteSnapshot(@driver,  @test_data["res_snapshot"])
+    sleep 2
     deleteInstance(@driver, @test_data["res_instance"])
+    sleep 2
     delete_secgroup(@driver, @test_data["res_secgroup"])
+    sleep 2
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
     wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
     ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
     disallocateIP(@driver, ip)
+    sleep 2
     delete_member(@driver, @test_data["user_mem"])
     sleep 3
     logout(@driver)
