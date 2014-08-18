@@ -32,8 +32,8 @@ module Common
     wait.until { driver.find_element(:css, "i.fa.fa-floppy-o").displayed? }
     driver.find_element(:css, "i.fa.fa-floppy-o").click    
     sleep 2
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").click
+    wait.until { driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").displayed? }
+    driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").click
     
     # select instance to attach to
     wait.until { driver.find_element(:xpath, "//*[@id=\"attachVolume\"]/div/div/div/button").displayed? }
@@ -43,7 +43,7 @@ module Common
     driver.find_element(:xpath, "//button[normalize-space(text())=\"Attach\"]").click
     
     # wait until the volume is no longer in attaching status
-    assert !180.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[4]").text =~ /in-use/) rescue false; sleep 2 }, "Timeout. Volume is taking too long to attach."
+    assert !180.times{ break if (driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[4]").text =~ /in-use/) rescue false; sleep 2 }, "Timeout. Volume is taking too long to attach."
     puts "Helper: Successfully attached volume #{ vol_name } to instance"
   end
   
@@ -53,15 +53,15 @@ module Common
     # click detach option of volume
     wait.until { driver.find_element(:css, "i.fa.fa-floppy-o").displayed? }
     driver.find_element(:css, "i.fa.fa-floppy-o").click    
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").click
+    wait.until { driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").displayed? }
+    driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[7]/div/button").click
     
     # confirmation message
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
   
     # wait until the volume is no longer attached
-    assert !180.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[4]").text =~ /available/) rescue false; sleep 2 }, "Timeout. Volume is taking too long to detach."
+    assert !180.times{ break if (driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td[4]").text =~ /available/) rescue false; sleep 2 }, "Timeout. Volume is taking too long to detach."
     puts "Helper: Successfully detached volume #{ vol_name }"
   end
   
@@ -73,15 +73,16 @@ module Common
     driver.find_element(:css, "i.fa.fa-floppy-o").click    
     sleep 2
     # perform deletion
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]").displayed? }
-    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr").size
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td/div/button[2]").click
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr/td[normalize-space(text())=\"#{ vol_name }\"]/..//td/div/ul/li[2]/a").click
+    wait.until { driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]").displayed? }
+    rows = driver.find_elements(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]").size
+    driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td/div/button[2]").click
+    driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]/td[normalize-space(text())=\"#{ vol_name }\"]/..//td/div/ul/li[2]/a").click
     sleep 2
-    wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
+    
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
 
-    assert !180.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[1]/tbody/tr").size == (rows-1)) rescue false; sleep 2 }, "Timeout. Volume is taking too long to delete." 
+    assert !180.times{ break if (driver.find_elements(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr[@ng-repeat=\"volume in volumes | orderBy:'name' \"]").size == (rows-1)) rescue false; sleep 2 }, "Timeout. Volume is taking too long to delete." 
     puts "Helper: Successfully deleted volume #{ vol_name }"
   end
   
@@ -120,14 +121,14 @@ module Common
     driver.find_element(:css, "i.fa.fa-floppy-o").click    
     sleep 5
     waitForProcessingVolumeSnapshots(driver)
-    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr").size
+    rows = driver.find_elements(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr").size
     rows.downto(2) do |i|
-      driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[7]/div/button[2]/span").click
-      wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[7]/div/ul/li/a").displayed? }
-      driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[7]/div/ul/li/a").click
-      wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-      driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
-      wait.until { driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr").size == (i - 1) }
+      driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr[#{ i }]/td[7]/div/button[2]/span").click
+      wait.until { driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr[#{ i }]/td[7]/div/ul/li/a").displayed? }
+      driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr[#{ i }]/td[7]/div/ul/li/a").click
+      wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+      driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
+      wait.until { driver.find_elements(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr").size == (i - 1) }
     end
     puts "Helper: Successfully cleaned up volume snapshots"
   end
@@ -135,9 +136,10 @@ module Common
   def waitForProcessingVolumeSnapshots(driver)
     wait = Selenium::WebDriver::Wait.new(:timeout => 120)
     sleep 2
-    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr").size
+    
+    rows = driver.find_elements(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr").size
     rows.downto(2) do |i|
-      !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table[2]/tbody/tr[#{ i }]/td[4]").text == ("available" || "error")) rescue false; sleep 2 }
+      !120.times{ break if (driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr[#{ i }]/td[4]").text == ("available" || "error")) rescue false; sleep 2 }
     end
   end
   

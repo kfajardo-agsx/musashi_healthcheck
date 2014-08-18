@@ -68,8 +68,8 @@ class DashboardActions < MiniTest::Test
     sleep 2
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").displayed? }    
+    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").text
     attachIP(@driver, @test_data["res_instance"], ip)
     sleep 2
     createSnapshot(@driver, @test_data["res_instance"],  @test_data["res_snapshot"])
@@ -125,8 +125,8 @@ class DashboardActions < MiniTest::Test
     sleep 2
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").displayed? }    
+    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").text
     disallocateIP(@driver, ip)
     sleep 2
     delete_member(@driver, @test_data["user_mem"])

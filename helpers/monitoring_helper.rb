@@ -65,28 +65,28 @@ module Common
     driver.find_element(:link, "  Monitoring Settings").click
 
     sleep 5
-    wait.until { driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[2]/h4/span").displayed? }
+    wait.until { driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[1]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").displayed? }
 
     #cpu
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[1]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").clear
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[1]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").send_keys(warning)
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[1]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").clear
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[1]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").send_keys(error)
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[1]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").clear
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[1]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").send_keys(warning)
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[1]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").clear
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[1]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").send_keys(error)
 
 		#memory
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[2]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").clear
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[2]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").send_keys(warning)
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[2]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").clear
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[2]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").send_keys(error)
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[2]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").clear
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[2]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").send_keys(warning)
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[2]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").clear
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[2]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").send_keys(error)
 
 		#storage
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[3]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").clear
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[3]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").send_keys(warning)
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[3]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").clear
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[4]/div[3]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").send_keys(error)
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[3]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").clear
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[3]/div[3]/div[1]/form/div[1]/div[2]/div[1]/input").send_keys(warning)
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[3]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").clear
+		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[3]/div[3]/div[3]/div[1]/form/div[2]/div[2]/div[1]/input").send_keys(error)
 
 		#save settings
-		driver.find_element(:xpath, "//*[@id='instance-monitoring-settings']/div[7]/button[1]").click
+		driver.find_element(:xpath, "//button[@ng-click=\"trgrSave()\"]").click
 		puts "Helper: Successfully saved instance settings."
   end
 end

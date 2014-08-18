@@ -7,7 +7,7 @@ module Common
     driver.find_element(:css, "i.fa.fa-lock").click
     !60.times{ break if (driver.find_element(:xpath, "//div[@id='dash-access']/div[5]/div[2]/button").displayed? rescue false); sleep 1 }
     sleep 2
-    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[3]/tbody/tr").size
+    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"keypair in keypairs\"]").size
     driver.find_element(:xpath, "//div[@id='dash-access']/div[5]/div[2]/button").click
     !60.times{ break if (driver.find_element(:name, "name").displayed? rescue false); sleep 1 }
     driver.find_element(:name, "name").clear
@@ -17,7 +17,7 @@ module Common
     driver.find_element(:xpath, "//div[3]/button[2]").click
 
     sleep 2
-    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[3]/tbody/tr").size == (rows+1)) rescue false; sleep 1 }, "Timeout. Was unable to import a keypair successfully."
+    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"keypair in keypairs\"]").size == (rows+1)) rescue false; sleep 1 }, "Timeout. Was unable to import a keypair successfully."
     puts "Helper: Successfully imported keypair #{ res_keypair }"
   end
 
@@ -28,13 +28,13 @@ module Common
     driver.find_element(:css, "i.fa.fa-lock").click
     !60.times{ break if (driver.find_element(:xpath, "//tr[@class=\"ng-scope\"]/td[normalize-space(text())=\"#{ res_keypair }\"]").displayed? rescue false); sleep 1 }
     sleep 2
-    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[3]/tbody/tr").size
+    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"keypair in keypairs\"]").size
     driver.find_element(:xpath, "//tr[@class=\"ng-scope\"]/td[normalize-space(text())=\"#{ res_keypair }\"]/../td[3]/div/button").click
     
-    wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/div/button[1]").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
     sleep 2
-    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[3]/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was unable to delete a keypair successfully."    
+    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"keypair in keypairs\"]").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was unable to delete a keypair successfully."    
     puts "Helper: Successfully deleted keypair #{ res_keypair }"
   end
 	

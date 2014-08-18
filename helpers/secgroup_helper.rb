@@ -6,9 +6,10 @@ module Common
     !60.times{ break if (driver.find_element(:css, "i.fa.fa-lock").displayed? rescue false); sleep 1 }
     driver.find_element(:css, "i.fa.fa-lock").click
     sleep 2
-    !60.times{ break if (driver.find_element(:xpath, "//div[@id='dash-access']/div[4]/div[2]/button").displayed? rescue false); sleep 1 }
-    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr").size
-    driver.find_element(:xpath, "//div[@id='dash-access']/div[4]/div[2]/button").click
+    
+    !60.times{ break if (driver.find_element(:xpath, "//button[@ng-click=\"createSecGroup()\"]").displayed? rescue false); sleep 1 }
+    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]").size
+    driver.find_element(:xpath, "//button[@ng-click=\"createSecGroup()\"]").click
     sleep 2
     !60.times{ break if (driver.find_element(:name, "name").displayed? rescue false); sleep 1 }
     driver.find_element(:name, "name").clear
@@ -17,7 +18,8 @@ module Common
     driver.find_element(:css, "textarea[name=\"description\"]").send_keys(common_description)
     driver.find_element(:xpath, "//div[3]/button[2]").click
     sleep 2
-    assert !60.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr").size == (rows+1)) rescue false; sleep 1 }, "Timeout. Was unable to create a secgroup successfully."
+
+    assert !60.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]").size == (rows+1)) rescue false; sleep 1 }, "Timeout. Was unable to create a secgroup successfully."
     puts "Helper: Successfully created security group #{ res_secgroup }"
   end
 
@@ -25,15 +27,15 @@ module Common
     wait = Selenium::WebDriver::Wait.new(:timeout => 60)
     !60.times{ break if (driver.find_element(:css, "i.fa.fa-lock").displayed? rescue false); sleep 1 }
     driver.find_element(:css, "i.fa.fa-lock").click
-    !60.times{ break if (driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr/td[normalize-space(text())=\"#{ res_secgroup }\"]").displayed? rescue false); sleep 1 }
-    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr").size
-    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr/td[normalize-space(text())=\"#{ res_secgroup }\"]/../td[5]/div/button[2]/span").click
-    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr/td[normalize-space(text())=\"#{ res_secgroup }\"]/../td[5]/div/ul/li/a").displayed?
-    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr/td[normalize-space(text())=\"#{ res_secgroup }\"]/../td[5]/div/ul/li/a").click
+    !60.times{ break if (driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]/td[normalize-space(text())=\"#{ res_secgroup }\"]").displayed? rescue false); sleep 1 }
+    rows = driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]").size
+    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]/td[normalize-space(text())=\"#{ res_secgroup }\"]/../td[5]/div/button[2]/span").click
+    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]/td[normalize-space(text())=\"#{ res_secgroup }\"]/../td[5]/div/ul/li/a").displayed?
+    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]/td[normalize-space(text())=\"#{ res_secgroup }\"]/../td[5]/div/ul/li/a").click
 
-    wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/div/button[1]").click  
-    assert !60.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/table[2]/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was unable to delete a secgroup successfully."
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click  
+    assert !60.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"secGroup in secGroups\"]").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was unable to delete a secgroup successfully."
     puts "Helper: Successfully deleted security group #{ res_secgroup }"
   end
 
