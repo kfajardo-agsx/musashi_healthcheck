@@ -6,13 +6,14 @@ module Common
       
     wait.until { driver.find_element(:css, "i.fa.fa-group").displayed? }
     driver.find_element(:css, "i.fa.fa-group").click
-    wait.until { driver.find_element(:xpath, "//tr[@class=\"ng-scope\"]/td[normalize-space(text())=\"#{ username }\"]").displayed? }
-    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size
+    wait.until { driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[2]/table/tbody/tr/td[normalize-space(text())=\"#{ username }\"]").displayed? }
+    rows = driver.find_elements(:xpath, " /html/body/div/div/div/div[2]/div[2]/table/tbody/tr").size
     driver.find_element(:xpath, "//tr[@class=\"ng-scope\"]/td[normalize-space(text())=\"#{ username }\"]/..//button[2]").click
     driver.find_element(:xpath, "(//tr[@class=\"ng-scope\"]/td[normalize-space(text())=\"#{ username }\"]/..//a[contains(text(),'Delete Member')])").click
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
-    
-    assert !180.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was unable to delete the PM successfully."
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
+   
+    assert !180.times{ break if (driver.find_elements(:xpath, " /html/body/div/div/div/div[2]/div[2]/table/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was unable to delete the PM successfully."
     puts "Helper: Successfully deleted member #{ username }"
   end
   
@@ -22,14 +23,14 @@ module Common
     wait.until { driver.find_element(:css, "i.fa.fa-group").displayed? }
     driver.find_element(:css, "i.fa.fa-group").click
     
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ username }\"]").displayed? }  
-    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ username }\"]/..//td/div/button[2]").click
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr/td[normalize-space(text())=\"#{ username }\"]/..//td/div/ul/li[2]/a").click
-    wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/div/button[1]").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/table/tbody/tr/td[normalize-space(text())=\"#{ username }\"]").displayed? }  
+    rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/table/tbody/tr").size
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/table/tbody/tr/td[normalize-space(text())=\"#{ username }\"]/..//td/div/button[2]").click
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/table/tbody/tr/td[normalize-space(text())=\"#{ username }\"]/..//td/div/ul/li[2]/a").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
 
-    assert !180.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows-1)) rescue false; sleep 2 }, "Timeout. Was unable to delete the PA and Project successfully."    
+    assert !180.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/table/tbody/tr").size == (rows-1)) rescue false; sleep 2 }, "Timeout. Was unable to delete the PA and Project successfully."    
     puts "Helper: Successfully deleted project and user #{ username }"
   end
 

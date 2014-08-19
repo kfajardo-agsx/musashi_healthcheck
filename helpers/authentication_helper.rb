@@ -9,7 +9,7 @@ module Common
     driver.find_element(:xpath, "//input[@type='text']").send_keys(username)
     driver.find_element(:xpath, "//input[@type='password']").clear
     driver.find_element(:xpath, "//input[@type='password']").send_keys(password)
-    driver.find_element(:xpath, "//input[@value='Login']").click
+    driver.find_element(:xpath, "//*[@id=\"dash-login\"]/ng-form/div/button").click
     
     if project!=""
       wait.until { driver.find_element(:xpath, "//*[@id=\"head-project-name\"]").text == project }

@@ -98,8 +98,8 @@ module Common
     driver.find_element(:link, "  Terminate").click
     
     # confirmation message
-    wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dash-instances\"]/div[2]/div/button[1]").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
     
     assert !240.times{ break if ((driver.find_elements(:xpath, "//*[@id=\"instances-list\"]/tbody/tr").size == (rows-1)) || (driver.find_element(:xpath, "//*[@id=\"details-action\"]/table/tbody/tr[1]/td[2]").text =~ /DELETED/)) rescue false; sleep 2 }, "Timeout. Instance is taking too long to delete."
     puts "Helper: Successfully deleted instance #{ instance_name }"
@@ -130,7 +130,7 @@ module Common
     wait.until { driver.find_element(:css, "i.fa.fa-copy").displayed? }
     driver.find_element(:css, "i.fa.fa-copy").click    
    
-    assert !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed?) rescue false; sleep 3 }, "Timeout. Was not able to create a snapshot successfully."
+    assert !120.times{ break if (driver.find_element(:xpath, "//*[@id=\"images-list\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed?) rescue false; sleep 3 }, "Timeout. Was not able to create a snapshot successfully."
     puts "Helper: Successfully snapshotted instance #{ instance_name }"
   end
   
@@ -140,15 +140,15 @@ module Common
     # go to images page    
     wait.until { driver.find_element(:css, "i.fa.fa-copy").displayed? }
     driver.find_element(:css, "i.fa.fa-copy").click
-    wait.until { driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed? }
+    wait.until { driver.find_element(:xpath, "//*[@id=\"images-list\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]").displayed? }
     sleep 2
-    wait.until { driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td[7]/div/button").displayed? }
-    rows = driver.find_elements(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr").size
-    driver.find_element(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td[7]/div/button").click
-    wait.until { driver.find_element(:xpath, "//div[@ng-show=\"confirm.title\"]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"images-list\"]/div[2]/div/button[1]").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"images-list\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td[7]/div/button").displayed? }
+    rows = driver.find_elements(:xpath, "//*[@id=\"images-list\"]/div/table/tbody/tr").size
+    driver.find_element(:xpath, "//*[@id=\"images-list\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ snapshot_name }\"]/..//td[7]/div/button").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
     sleep 2
-    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"images-list\"]/table/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was not able to delete the snapshot successfully."
+    assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"images-list\"]/div/table/tbody/tr").size == (rows-1)) rescue false; sleep 1 }, "Timeout. Was not able to delete the snapshot successfully."
     puts "Helper: Successfully deleted snapshot #{ snapshot_name }"
   end
   

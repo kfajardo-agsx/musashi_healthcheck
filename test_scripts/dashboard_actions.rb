@@ -46,7 +46,7 @@ class DashboardActions < MiniTest::Test
     assignPooltoProject(@driver, @test_data["user_pool"], @test_data["user_project"])
     logout(@driver, "admin")
     puts "Admin has logged out.\n"
-
+    
     puts "Logging in PM ..... "
     login(@driver, @test_data["user_mem"], @test_data["user_password"], @test_data["user_project"])
     puts "PM has accessed project successfully.\n"
@@ -68,8 +68,8 @@ class DashboardActions < MiniTest::Test
     sleep 2
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").displayed? }    
+    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").text
     attachIP(@driver, @test_data["res_instance"], ip)
     sleep 2
     createSnapshot(@driver, @test_data["res_instance"],  @test_data["res_snapshot"])
@@ -103,7 +103,7 @@ class DashboardActions < MiniTest::Test
     detachVolume(@driver, @test_data["res_volume"])
     sleep 2
     detachIP(@driver, @test_data["res_instance"])
-    sleep 2
+    sleep 3
     deleteAllVolumeSnapshots(@driver)
     sleep 2
     deleteVolume(@driver, @test_data["res_volume"])
@@ -125,8 +125,8 @@ class DashboardActions < MiniTest::Test
     sleep 2
     wait.until { @driver.find_element(:css, "i.fa.fa-lock").displayed? }
     @driver.find_element(:css, "i.fa.fa-lock").click
-    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").displayed? }    
-    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/table[1]/tbody/tr[2]/td[2]").text
+    wait.until { @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").displayed? }    
+    ip = @driver.find_element(:xpath, "//*[@id=\"dash-access\"]/div[2]/table/tbody/tr[2]/td[2]").text
     disallocateIP(@driver, ip)
     sleep 2
     delete_member(@driver, @test_data["user_mem"])
