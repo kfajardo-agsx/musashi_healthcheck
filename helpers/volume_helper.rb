@@ -121,14 +121,17 @@ module Common
     driver.find_element(:css, "i.fa.fa-floppy-o").click    
     sleep 5
     waitForProcessingVolumeSnapshots(driver)
+    sleep 2
     rows = driver.find_elements(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr").size
     rows.downto(2) do |i|
       driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr[#{ i }]/td[7]/div/button[2]/span").click
       wait.until { driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr[#{ i }]/td[7]/div/ul/li/a").displayed? }
       driver.find_element(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr[#{ i }]/td[7]/div/ul/li/a").click
       wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
+      sleep 2
       driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
       wait.until { driver.find_elements(:xpath, "/html/body/div/div/div/div[2]/div[4]/table/tbody/tr").size == (i - 1) }
+      sleep 2
     end
     puts "Helper: Successfully cleaned up volume snapshots"
   end

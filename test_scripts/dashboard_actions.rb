@@ -46,7 +46,7 @@ class DashboardActions < MiniTest::Test
     assignPooltoProject(@driver, @test_data["user_pool"], @test_data["user_project"])
     logout(@driver, "admin")
     puts "Admin has logged out.\n"
-
+    
     puts "Logging in PM ..... "
     login(@driver, @test_data["user_mem"], @test_data["user_password"], @test_data["user_project"])
     puts "PM has accessed project successfully.\n"
@@ -103,7 +103,7 @@ class DashboardActions < MiniTest::Test
     detachVolume(@driver, @test_data["res_volume"])
     sleep 2
     detachIP(@driver, @test_data["res_instance"])
-    sleep 2
+    sleep 3
     deleteAllVolumeSnapshots(@driver)
     sleep 2
     deleteVolume(@driver, @test_data["res_volume"])

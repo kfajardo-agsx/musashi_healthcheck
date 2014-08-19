@@ -16,7 +16,7 @@ module Common
     driver.find_element(:name, "keys").send_keys(keypair_keys)
     driver.find_element(:xpath, "//div[3]/button[2]").click
 
-    sleep 2
+    sleep 5
     assert !120.times{ break if (driver.find_elements(:xpath, "//*[@id=\"dash-access\"]/div/table/tbody/tr[@ng-repeat=\"keypair in keypairs\"]").size == (rows+1)) rescue false; sleep 1 }, "Timeout. Was unable to import a keypair successfully."
     puts "Helper: Successfully imported keypair #{ res_keypair }"
   end

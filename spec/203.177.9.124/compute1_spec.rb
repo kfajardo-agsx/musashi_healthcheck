@@ -66,20 +66,20 @@ describe port (5904) do
 	it { should be_listening.with('tcp')}
 end
 
-#python
-describe port (41807) do
-	it { should be_listening.with('udp')}
-end
+##python
+#describe port (41807) do
+#	it { should be_listening.with('udp')}
+#end
 
 #ntpd
 describe port (123) do
 	it { should be_listening.with('udp')}
 end
 
-#python
-describe port (60692) do
-	it { should be_listening.with('udp')}
-end
+##python
+#describe port (60692) do
+#	it { should be_listening.with('udp')}
+#end
 
 #rsyslogd
 describe port (57573) do

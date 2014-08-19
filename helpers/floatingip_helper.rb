@@ -123,7 +123,7 @@ module Common
     wait.until { driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").displayed? }
     driver.find_element(:xpath, "//*[@id=\"alert_id\"]/div/div/button[1]").click
     
-    assert !60.times{ break if ((driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/table/tbody/tr").size == (rows-1)) rescue false); sleep 1 }, "Timeout. Was not able to delete an IP Pool successfully."
+    assert !60.times{ break if ((driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr").size == (rows-1)) rescue false); sleep 1 }, "Timeout. Was not able to delete an IP Pool successfully."
     puts "Helper: Successfully deleted an IP pool"
 	end
   
