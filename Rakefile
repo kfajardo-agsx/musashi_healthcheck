@@ -5,7 +5,6 @@ namespace 'HC' do
   desc "Check dashboard functions, include environment options on command"
   task :dashboard do
     file = "test_scripts/dashboard_actions.rb"
-    system("rake dbinjection")
     system("ruby #{ file }")
   end
 
@@ -21,8 +20,4 @@ end
 
 RSpec::Core::RakeTask.new(:spec) do |t|
   t.pattern = 'spec/*/*_spec.rb'
-end
-
-RSpec::Core::RakeTask.new(:dbinjection) do |t|
-  t.pattern = 'spec/*/*_command.rb'
 end

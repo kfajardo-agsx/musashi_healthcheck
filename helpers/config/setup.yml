@@ -1,4 +1,4 @@
 # environment to test
-envi : "http://<dashboard URL>/"
+envi : "http://<dashboard-url>/"
 
 test_browser : "firefox"

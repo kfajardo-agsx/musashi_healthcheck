@@ -26,5 +26,5 @@ res_key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxB4afuoC+V3vJCqdMwRJHpPQconGbJb1iv
 common_description: "test"
 
 # keystone authentication
-os_auth_url: "http://<AUTH URL OF MC>:35357/v2.0"
+os_auth_url: "http://<auth URL for mc>:35357/v2.0"
 os_tenant_name: "admin"
