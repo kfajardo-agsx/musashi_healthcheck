@@ -21,10 +21,10 @@ module Common
     puts "Helper: Successfully logged in #{ username }"
   end
 
-  def logout(driver, role="")
+  def logout(driver, admin=false)
     wait = Selenium::WebDriver::Wait.new(:timeout => 60)
     
-    if role!="admin"
+    if !admin
       wait.until { driver.find_element(:css, "i.fa.fa-hdd-o").displayed? }
       driver.find_element(:css, "i.fa.fa-hdd-o").click
       sleep 2
