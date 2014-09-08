@@ -6,6 +6,7 @@ require 'minitest'
 require "minitest/autorun"
 require "selenium-webdriver"
 require "sqlite3"
+require "net/ssh"
 Dir[current_directory + "/helpers/*.rb"].each {|ruby| require ruby }
 require "yaml"
 

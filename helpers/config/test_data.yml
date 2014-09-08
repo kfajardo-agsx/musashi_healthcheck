@@ -3,9 +3,9 @@ def_admin_user: "admin"
 def_admin_pass: "klnm12"
 def_admin_email: "admin@musashi.com"
 
-user_mem: "pm0"
+user_pm: "pm0"
 user_pa: "pa0"
-user_admin: "admin"
+user_admin: "admin0"
 user_emailusername: "qa_musashi"
 user_emaildomain: "@musashi.ph"
 user_password: "12345678"
@@ -26,5 +26,9 @@ res_key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxB4afuoC+V3vJCqdMwRJHpPQconGbJb1iv
 common_description: "test"
 
 # keystone authentication
-os_auth_url: "http://<auth URL for mc>:35357/v2.0"
+os_auth_url: "http://<NAME.OR.IP.OF.MC.HERE>:35357/v2.0"
 os_tenant_name: "admin"
+
+# redis authentication
+redis_password: klnm12
+host: <NAME.OR.IP.OF.MC.HERE>
