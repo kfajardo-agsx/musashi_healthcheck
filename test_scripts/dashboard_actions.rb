@@ -39,8 +39,8 @@ class DashboardActions < MiniTest::Test
     end
     
     Net::SSH.start(@test_data["host"], ENV['USER'], options) do |ssh|
-      puts "redis-cli -a #{ @test_data["redis_password"] } hget 'signup_invites.emails.#{ email }' token"
       token = ssh.exec!("redis-cli -a #{ @test_data["redis_password"] } hget 'signup_invites.emails.#{ email }' token")
+      puts "Invitation token for user: #{ token }"  
     end
     
     token
@@ -151,6 +151,8 @@ class DashboardActions < MiniTest::Test
   end
    
   def cleanup 
+    wait = Selenium::WebDriver::Wait.new(:timeout => 60)
+  
     puts "====CLEANUP OF RESOURCES==="
     
     puts " >> PM is doing part of the cleanup of project"
