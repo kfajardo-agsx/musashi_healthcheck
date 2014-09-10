@@ -1,21 +1,5 @@
 require 'spec_helper'
 
-# CHECK PACKAGES
-describe package('python-guestfs')  do
-  it { should be_installed }
-end
-
-describe package('nova-network')  do
-  it { should be_installed }
-end
-
-describe package('nova-api-metadata')  do
-  it { should be_installed }
-end
-
-describe package('nova-compute-kvm')  do
-  it { should be_installed }
-end
 
 # CHECK SERVICES
 

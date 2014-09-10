@@ -124,3 +124,67 @@ end
 describe file('/tmp/secret.xml') do
 	it { should be_file }
 end 
+
+describe file('/etc/diamond/collectors/CPUCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/DiskUsageCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/LoadAverageCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/MemoryCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/MusashiCPUCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/MusashiDiskSpaceCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/MusashiMemoryCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/MusashiPingCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/MusashiPortCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/SockstatCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/Target_MusashiPingCollector.csv') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/Target_MusashiPortCollector.csv') do
+	it { should be_file }
+end
+
+describe file('/etc/diamond/collectors/VMStatCollector.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/glance/glance-api.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/glance/glance-registry.conf') do
+	it { should be_file }
+end
+
+describe file('/etc/riemann/musashi_config.clj') do
+	it { should be_file }
+end
