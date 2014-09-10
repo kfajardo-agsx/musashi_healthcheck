@@ -65,9 +65,10 @@ describe file('/root/backup_scripts/backup.sh') do
 	it { should be_file }
 end
 
-describe file('/etc/dmd.cfg') do
-	it { should be_file }
-end
+#not required for v1.0.0
+#describe file('/etc/dmd.cfg') do
+#	it { should be_file }
+#end
 
 describe file('/etc/init/logstash.conf') do
 	it { should be_file }
@@ -121,23 +122,16 @@ describe file('/etc/rsyslog.d/100-musashi.conf') do
 	it { should be_file }
 end
 
-describe file('/tmp/secret.xml') do
-	it { should be_file }
-end 
-
-describe file('/etc/diamond/collectors/CPUCollector.conf') do
-	it { should be_file }
-end
+#not required for now
+#describe file('/tmp/secret.xml') do
+#	it { should be_file }
+#end 
 
 describe file('/etc/diamond/collectors/DiskUsageCollector.conf') do
 	it { should be_file }
 end
 
 describe file('/etc/diamond/collectors/LoadAverageCollector.conf') do
-	it { should be_file }
-end
-
-describe file('/etc/diamond/collectors/MemoryCollector.conf') do
 	it { should be_file }
 end
 
