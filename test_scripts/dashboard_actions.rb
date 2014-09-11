@@ -29,6 +29,7 @@ class DashboardActions < MiniTest::Test
     token = ""
     options = Net::SSH::Config.for(@test_data["host"])
     if ENV['ASK_LOGIN_PASSWORD']
+      require 'highline/import'
       options[:password] = ask("\nEnter login password: ") { |q| q.echo = false }
     else
         options[:password] = ENV['PASSWORD']
