@@ -127,10 +127,6 @@ end
 #	it { should be_file }
 #end 
 
-describe file('/etc/diamond/collectors/DiskUsageCollector.conf') do
-	it { should be_file }
-end
-
 describe file('/etc/diamond/collectors/LoadAverageCollector.conf') do
 	it { should be_file }
 end
