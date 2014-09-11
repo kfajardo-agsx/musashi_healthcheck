@@ -2743,23 +2743,23 @@ describe port (80) do #apache2
 end
 
 describe port (81) do #dashboard via docker
-  it { should be_listening.with('tcp6') }
+  it { should be_listening }
 end
 
 describe port (514) do #logstash
-  it { should be_listening.with('tcp6') }
+  it { should be_listening }
 end
 
 describe port (3307) do #mariadb
-  it { should be_listening.with('tcp6') }
+  it { should be_listening }
 end
 
 describe port (5555) do #riemann
-  it { should be_listening.with('tcp6') }
+  it { should be_listening }
 end
 
 describe port (2003) do #graphite
-  it { should be_listening.with('tcp6') }
+  it { should be_listening }
 end
 
 describe port (3260) do #iSCI
