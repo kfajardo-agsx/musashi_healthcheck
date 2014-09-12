@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+
 # CHECK SERVICES
 
 describe service('nova-compute') do
@@ -35,9 +36,9 @@ describe port (22) do
 end
 
 #qemu-system-x
-describe port (5975) do
-	it { should be_listening.with('tcp')}
-end
+#describe port (5975) do
+#	it { should be_listening.with('tcp')}
+#end
 
 #qemu-system-x
 describe port (5900) do
@@ -65,6 +66,6 @@ end
 #end
 
 #rsyslogd
-describe port (57573) do
-	it { should be_listening.with('udp')}
-end
+#describe port (57573) do
+#	it { should be_listening.with('udp')}
+#end
