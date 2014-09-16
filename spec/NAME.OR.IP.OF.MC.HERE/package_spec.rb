@@ -3,8 +3,6 @@ require 'spec_helper'
 require 'rspec/its'
 require 'csv'
 
-puts CSV.inspect
-puts current_directory
 CSV.foreach "#{current_directory}/MC.csv" do |pkg,version|
 		describe package(pkg) do 
 			it do
