@@ -41,14 +41,14 @@ end
 #end
 
 #qemu-system-x
-describe port (5900) do
-	it { should be_listening.with('tcp')}
-end
-
-#qemu-system-x8
-describe port (5904) do
-	it { should be_listening.with('tcp')}
-end
+#describe port (5900) do
+#	it { should be_listening.with('tcp')}
+#end
+#
+##qemu-system-x8
+#describe port (5904) do
+#	it { should be_listening.with('tcp')}
+#end
 
 ##python
 #describe port (41807) do
