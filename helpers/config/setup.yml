@@ -1,4 +1,4 @@
 # environment to test
-envi : "https://<DASHBOARD.URL.HERE>"
+envi : "https://203.177.9.123"
 
 test_browser : "firefox"
