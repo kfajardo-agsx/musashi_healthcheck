@@ -26,9 +26,9 @@ res_key: "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxB4afuoC+V3vJCqdMwRJHpPQconGbJb1iv
 common_description: "test"
 
 # keystone authentication
-os_auth_url: "http://<NAME.OR.IP.OF.MC.HERE>:35357/v2.0"
+os_auth_url: "http://203.177.9.123:35357/v2.0"
 os_tenant_name: "admin"
 
 # redis authentication
 redis_password: klnm12
-host: <NAME.OR.IP.OF.MC.HERE>
+host: 203.177.9.123
