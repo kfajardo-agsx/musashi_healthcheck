@@ -10,7 +10,7 @@ module Common
     driver.find_element(:css, "i.fa.fa-hdd-o").click
     sleep 5
     driver.find_element(:xpath, "//*[@id=\"side-action\"]").click
-    wait.until { driver.find_element(:xpath, "/html/body/div[3]/div/div").displayed? }
+    wait.until { driver.find_element(:xpath, "/html/body/div[3]/div/div/div[1]/h6").displayed? }
     sleep 1
     # step 1
     driver.find_element(:name, "name").clear
@@ -28,7 +28,7 @@ module Common
     driver.find_element(:xpath, "//button[3]").click
     sleep 1
     # step 4
-    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[4]/div[4]/div/div/button/span[2]").click
+    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[4]/div[2]/div/div/button/span[2]").click
     wait.until { driver.find_element(:xpath, "//li/a/span[normalize-space(text())=\"#{ keypair }\"]").displayed? }
     driver.find_element(:xpath, "//li/a/span[normalize-space(text())=\"#{ keypair }\"]").click
     @driver.find_element(:xpath, "//button[3]").click
