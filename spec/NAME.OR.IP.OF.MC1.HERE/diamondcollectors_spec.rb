@@ -18,7 +18,8 @@ describe file('/etc/diamond/collectors/MusashiCPUCollector.conf') do
   its(:content) { should match /^instance_prefix = instances/ }
   its(:content) { should match /^interval = 300/ }
   its(:content) { should match /^path_prefix = servers/ }
-  its(:content) { should match /^method = Sequential/ }
+  its(:content) { should match /^method = Threaded/ }
+  #method on v1.0.0 is sequential. On v1.1.0, threaded
 end
 
 describe file('/etc/diamond/collectors/MusashiDiskSpaceCollector.conf') do
@@ -58,7 +59,8 @@ describe file('/etc/diamond/collectors/MusashiPingCollector.conf') do
   its(:content) { should match /^interval = 300/ }
   its(:content) { should match /^splay = 1/ }
   its(:content) { should match /^path_prefix = servers/ }
-  its(:content) { should match /^method = Sequential/ }
+  its(:content) { should match /^method = Threaded/ }
+  #method on v1.0.0 is sequential. On v1.1.0, threaded
 end
 
 describe file('/etc/diamond/collectors/MusashiPortCollector.conf') do
@@ -73,7 +75,8 @@ describe file('/etc/diamond/collectors/MusashiPortCollector.conf') do
   its(:content) { should match /^interval = 300/ }
   its(:content) { should match /^splay = 1/ }
   its(:content) { should match /^path_prefix = servers/ }
-  its(:content) { should match /^method = Sequential/ }
+  its(:content) { should match /^method = Threaded/ }
+  #method on v1.0.0 is sequential. On v1.1.0, threaded
 end
 
 describe file('/etc/diamond/collectors/SockstatCollector.conf') do
@@ -89,8 +92,6 @@ end
 
 describe file('/etc/diamond/collectors/Target_MusashiPortCollector.csv') do
   its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,22,tcp/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,80,tcp/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,8080,tcp/ }
   its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,5000,tcp/ }
   its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,35357,tcp/ }
   its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,8774,tcp/ }

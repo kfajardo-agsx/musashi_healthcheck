@@ -74,9 +74,10 @@ describe file('/etc/init/logstash.conf') do
 	it { should be_file }
 end
 
-describe file('/etc/init/mariadb.conf') do
-	it { should be_file }
-end
+#not available on v1.1.0
+#describe file('/etc/init/mariadb.conf') do
+#	it { should be_file }
+#end
 
 describe file('/etc/redis/redis.conf') do
 	it { should be_file }

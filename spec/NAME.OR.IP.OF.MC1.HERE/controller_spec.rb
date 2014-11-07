@@ -4,9 +4,6 @@ require 'rspec/its'
 # CHECK SERVICES
 describe package('apache2')  do
   it { should be_installed }
-end
-
-describe service('apache2') do
   it { should be_running   }
 end
 
@@ -32,11 +29,10 @@ describe package('rabbitmq-server') do
   it { should be_installed }
 end
 
-#describe package('cinder-scheduler') do
-#  it { should be_installed }
-#  it { should be_enabled   }
-#  it { should be_running   }
-#end
+describe package('cinder-scheduler') do
+  it { should be_enabled   }
+  it { should be_running   }
+end
 
 describe service('cinder-volume') do
   it { should be_enabled   }
@@ -131,9 +127,10 @@ describe port (514) do #logstash
   it { should be_listening }
 end
 
-describe port (3307) do #mariadb
-  it { should be_listening }
-end
+#no mariadb for v1.1.0
+# describe port (3307) do #mariadb
+#   it { should be_listening }
+# end
 
 describe port (5555) do #riemann
   it { should be_listening }
