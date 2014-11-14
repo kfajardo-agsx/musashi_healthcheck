@@ -7,10 +7,6 @@ describe package('apache2')  do
   it { should be_running   }
 end
 
-describe package('mysql-server') do
-  it { should be_installed }
-end
-
 describe service('mysql') do
   it { should be_enabled   }
   it { should be_running   }
@@ -18,6 +14,11 @@ end
 
 describe package('keystone') do
   it { should be_installed }
+end
+
+describe service('glance-registry') do
+  it { should be_enabled   }
+  it { should be_running   }
 end
 
 describe service('glance-api') do
@@ -29,12 +30,22 @@ describe package('rabbitmq-server') do
   it { should be_installed }
 end
 
+describe service('cinder-volume') do
+  it { should be_enabled   }
+  it { should be_running   }
+end
+
+describe service('cinder-api') do
+  it { should be_enabled   }
+  it { should be_running   }
+end
+
 describe package('cinder-scheduler') do
   it { should be_enabled   }
   it { should be_running   }
 end
 
-describe service('cinder-volume') do
+describe service('nova-cert') do
   it { should be_enabled   }
   it { should be_running   }
 end
@@ -44,7 +55,7 @@ describe service('nova-api') do
   it { should be_running   }
 end
 
-describe service('nova-scheduler') do
+describe service('nova-consoleauth') do
   it { should be_enabled   }
   it { should be_running   }
 end
@@ -54,6 +65,17 @@ describe service('nova-conductor') do
   it { should be_running   }
 end
 
+describe service('nova-scheduler') do
+  it { should be_enabled   }
+  it { should be_running   }
+end
+
+describe service('nova-novncproxy') do
+  it { should be_enabled   }
+  it { should be_running   }
+end
+
+# Docker containers
 describe service('graphite') do
   it { should be_running   }
 end
@@ -69,11 +91,7 @@ end
 describe service('dashboard') do
   it { should be_running   }
 end
-
-#describe package('mariadb') do
-#  it { should be_installed }
-#end
-
+\
 # CHECK DEFAULT PORTS
 describe port (3306) do
   it { should be_listening.with('tcp') }
@@ -127,11 +145,6 @@ describe port (514) do #logstash
   it { should be_listening }
 end
 
-#no mariadb for v1.1.0
-# describe port (3307) do #mariadb
-#   it { should be_listening }
-# end
-
 describe port (5555) do #riemann
   it { should be_listening }
 end
@@ -153,5 +166,9 @@ describe port (11211) do #memcached
 end
 
 describe port (6379) do #redis-server
+  it { should be_listening.with('tcp') }
+end
+
+describe port (53) do #named (DNS)
   it { should be_listening.with('tcp') }
 end
