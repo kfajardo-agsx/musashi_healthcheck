@@ -15,6 +15,6 @@ describe file('/etc/apache2/sites-available/dashboard.conf') do
   its(:content) { should match /<\/VirtualHost>/ }
   its(:content) { should match /<Proxy balancer:\/\/frontend>/ }
   its(:content) { should match /RequestHeader set X_FORWARDED_PROTO 'https'/ }
-  its(:content) { should match /BalancerMember http:\/\/\d+.\d+.\d+.\d+:81/ }
+  its(:content) { should match /BalancerMember http:\/\/(.*?)\.(.*?)\.(.*?):81/ }
   its(:content) { should match /<\/Proxy>/ }
 end

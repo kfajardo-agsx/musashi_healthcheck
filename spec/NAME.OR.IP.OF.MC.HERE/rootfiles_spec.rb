@@ -4,14 +4,15 @@ require 'rspec/its'
 describe file('/root/backup_scripts/backup.sh') do
   its(:content) { should match /^TIMESTAMP=`date \S%y-%m-%d\w%H-%M-%S`/ }
   its(:content) { should match /^umount \/musashi_backup/ }
-  its(:content) { should match /^rbd unmap \/dev\/rbd1/ }
-  its(:content) { should match /^rbd map musashi_backup --pool musashi/ }
+  #commented out two items below on v1.1.0
+  #its(:content) { should match /^rbd unmap \/dev\/rbd1/ }
+  #its(:content) { should match /^rbd map musashi_backup --pool musashi/ }
   its(:content) { should match /^mount \/dev\/rbd\/musashi\/musashi_backup \/musashi_backup/ }
   its(:content) { should match /^sh \/root\/backup_scripts\/openstack_backup.sh/ }
   its(:content) { should match /^sh \/root\/backup_scripts\/dashboard_backup.sh/ }
   its(:content) { should match /^tar -czvf musashi_backup-[$]TIMESTAMP.tar.gz \/musashi_backup/ }
-  its(:content) { should match /rsync -rvaz --progress musashi_backup-[$]TIMESTAMP.tar.gz deploy@[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}:(~)\// }
-  its(:content) { should match /^rsync -rvaz --progress \/root\/backup_scripts\/restore.sh deploy@[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}:~\// }
+  its(:content) { should match /rsync -rvaz --progress musashi_backup-[$]TIMESTAMP.tar.gz deploy@(.*?).(.*?).(.*?):(~)\// }
+  its(:content) { should match /^rsync -rvaz --progress \/root\/backup_scripts\/restore.sh deploy@(.*?).(.*?).(.*?):(~)\// }
 end
 
 describe file('/root/keystone_data.sh') do
@@ -95,27 +96,24 @@ describe file('/root/.my.cnf') do
 end
 
 describe file('/root/.ssh/config') do
+  #Hostname no longer available on v1.1.0
   its(:content) { should match /Host github.com/ }
   its(:content) { should match /User musashi-deploy/ }
   its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
   its(:content) { should match /Port 22/ }
   its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /Hostname ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/ }
   its(:content) { should match /User deploy/ }
   its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
   its(:content) { should match /Port 22/ }
   its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /Hostname ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/ }
   its(:content) { should match /User deploy/ }
   its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
   its(:content) { should match /Port 22/ }
   its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /Hostname ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/ }
   its(:content) { should match /User deploy/ }
   its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
   its(:content) { should match /Port 22/ }
   its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /Hostname ([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})/ }
   its(:content) { should match /User deploy/ }
   its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
   its(:content) { should match /Port 22/ }

@@ -3,7 +3,7 @@ require 'spec_helper'
 require 'rspec/its'
 require 'csv'
 
-CSV.foreach "#{current_directory}/SNmaster.csv" do |pkg,version|
+CSV.foreach "#{current_directory}/SN1.csv" do |pkg,version|
 		describe package(pkg) do 
 			it do
 				should be_installed.with_version(version)

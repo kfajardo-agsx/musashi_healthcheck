@@ -20,6 +20,11 @@ end
 
 # CHECK PORTS
 
+#ntpd
+describe port(123) do
+  it { should be_listening('udp')}
+end
+
 #python
 describe port (8775) do
   it { should be_listening.with('tcp') }

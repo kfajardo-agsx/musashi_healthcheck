@@ -19,7 +19,7 @@ describe file('/etc/mysql/my.cnf') do
   its(:content) { should match /tmpdir\s+= \/tmp/ }
   its(:content) { should match /lc-messages-dir	= \/usr\/share\/mysql/ }
   its(:content) { should match /skip-external-locking/ }
-  its(:content) { should match /bind-address\s+=\s\d+.\d+.\d+.\d+/ }     # To be updated
+ # its(:content) { should match /bind-address\s+=\s\d+.\d+.\d+.\d+/ }     # To be updated
   its(:content) { should match /key_buffer\s+= 16M/ }
   its(:content) { should match /max_allowed_packet	= 16M/ }
   its(:content) { should match /thread_stack\s+= 192K/ }
