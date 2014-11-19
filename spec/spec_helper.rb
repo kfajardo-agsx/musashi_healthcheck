@@ -6,7 +6,9 @@ require 'net/ssh'
 require 'highline/import'
 require "yaml"
 
-set :backend, :ssh
+include Serverspec::Helper::Ssh
+include Serverspec::Helper::DetectOS
+include Serverspec::Helper::Properties
 
 RSpec.configure do |c|
   c.before :all do

@@ -3,8 +3,9 @@ current_directory = File.expand_path(File.dirname(__FILE__) )
 require 'spec_helper'
 require 'rspec/its'
 require 'yaml'
+require 'erb'
 
-@test_data = YAML.load_file(current_directory + "/../../helpers/config/test_data.yml")
+@test_data = YAML.load(ERB.new(File.read(current_directory + "/../../helpers/config/test_data.yml")).result)
 
 describe command("keystone --os-auth-url #{@test_data["os_auth_url"]} --os-username #{@test_data["def_admin_user"]} --os-password #{@test_data["def_admin_pass"]} --os-tenant-name #{@test_data["os_tenant_name"]} tenant-create --name=#{@test_data["user_project"]} --description='#{@test_data["common_description"]}'") do
   its(:stdout) { should match /Property.*|.*Value/ }
