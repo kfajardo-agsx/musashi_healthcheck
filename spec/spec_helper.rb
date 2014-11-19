@@ -40,8 +40,12 @@ RSpec.configure do |c|
         options[:keys] = ENV['KEY']
         options[:auth_methods] = ['publickey']
       end
+      if !(ENV['PORT'].nil?)
+        options[:port] = ENV['PORT']
+      else
+        options[:port] = 2222
+      end
       user    = ENV['USER']
-      options[:port] = 2222
       c.ssh   = Net::SSH.start(c.host, user, options)
     end
   end
