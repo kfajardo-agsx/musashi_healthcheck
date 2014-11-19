@@ -19,7 +19,7 @@ RSpec.configure do |c|
       file = block.source_location.first
     end
     nodename  = File.basename(Pathname.new(file).dirname)
-    servers = YAML::load_file(current_directory + "nodes.yml")
+    servers = YAML::load_file(current_directory + "/nodes.yml")
     host = servers["#{ nodename }"]
     if c.host != host
       c.ssh.close if c.ssh
