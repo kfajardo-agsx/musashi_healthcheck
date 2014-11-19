@@ -6,9 +6,7 @@ require 'net/ssh'
 require 'highline/import'
 require "yaml"
 
-include Serverspec::Helper::Ssh
-include Serverspec::Helper::DetectOS
-include Serverspec::Helper::Properties
+set :backend, :ssh
 
 RSpec.configure do |c|
   c.before :all do
@@ -19,7 +17,7 @@ RSpec.configure do |c|
       file = block.source_location.first
     end
     nodename  = File.basename(Pathname.new(file).dirname)
-    servers = YAML::load_file(current_directory + "nodes.yml")
+    servers = YAML::load_file(current_directory + "/nodes.yml")
     host = servers["#{ nodename }"]
     if c.host != host
       c.ssh.close if c.ssh

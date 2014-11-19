@@ -9,4 +9,5 @@ gem 'minitest'
 gem 'sqlite3'
 gem 'rake'
 gem 'serverspec'
+gem 'highline'
 gem "net-ssh"
