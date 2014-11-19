@@ -1,4 +1,4 @@
 # environment to test
-envi : "https://<DASHBOARD.URL.HERE>"
-
+envi : "https://<%= ENV['HOST'] %>"
+port : <%= ENV['PORT'] %>
 test_browser : "firefox"

@@ -38,7 +38,12 @@ class DashboardActions < MiniTest::Test
       options[:keys] = ENV['KEY']
       options[:auth_methods] = ['publickey']
     end
-    
+    if !(ENV['PORT'].nil?)
+      options[:port] = ENV['PORT']
+    else
+      options[:port] = 2222
+    end
+
     Net::SSH.start(@test_data["host"], ENV['USER'], options) do |ssh|
       token = ssh.exec!("redis-cli -a #{ @test_data["redis_password"] } hget 'signup_invites.emails.#{ email }' token")
       puts "Invitation token for user: #{ token }"  
@@ -84,7 +89,7 @@ class DashboardActions < MiniTest::Test
     @driver.get(get_link(get_token(pm_email)))
     signup_new_user(@driver, @test_data["user_pm"], @test_data["user_pm"], @test_data["user_password"])
     sleep 2
-    puts "====CREATION OF ACCOUNTS DONE===\n"
+    puts "====CREATION OF ACCOUNTS DONE===\n\n"
   end
   
   def perform_actions
@@ -148,7 +153,7 @@ class DashboardActions < MiniTest::Test
     startInstance(@driver, @test_data["res_instance"])
     sleep 3
     logout(@driver)
-    puts "====CREATION OF RESOURCES DONE===\n"
+    puts "====CREATION OF RESOURCES DONE===\n\n"
   end
    
   def cleanup 

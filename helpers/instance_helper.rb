@@ -28,7 +28,7 @@ module Common
     driver.find_element(:xpath, "//button[3]").click
     sleep 1
     # step 4
-    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[4]/div[2]/div/div/button/span[2]").click
+    driver.find_element(:xpath, "//*[@id=\"launchInstance\"]/div[4]/div[3]/div/div/div/button/span[1]/span[2]").click
     wait.until { driver.find_element(:xpath, "//li/a/span[normalize-space(text())=\"#{ keypair }\"]").displayed? }
     driver.find_element(:xpath, "//li/a/span[normalize-space(text())=\"#{ keypair }\"]").click
     @driver.find_element(:xpath, "//button[3]").click
