@@ -113,8 +113,8 @@ module Common
     wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr").displayed? }
     rows = driver.find_elements(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr").size
 
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[2]/span").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[2]/span").click
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[4]/div/button[2]/span").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[4]/div/button[2]/span").click
     
     wait.until { driver.find_element(:link, "Delete").displayed? }
     driver.find_element(:link, "Delete").click
@@ -132,11 +132,9 @@ module Common
     
     wait.until { driver.find_element(:css, "i.fa.fa-sitemap").displayed? }
     driver.find_element(:css, "i.fa.fa-sitemap").click
-    
-   # wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[3]/div[2]/button").displayed? }
-   
-    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[1]").displayed? }
-    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[3]/div/button[1]").click
+
+    wait.until { driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[4]/div/button[1]").displayed? }
+    driver.find_element(:xpath, "//*[@id=\"dv-main-content\"]/div[2]/table/tbody/tr/td[normalize-space(text())=\"#{ pool_name }\"]/../td[4]/div/button[1]").click
     wait.until { driver.find_element(:xpath, "//*[@id=\"form-assign-pool\"]/div/div/div/button").displayed? }
     driver.find_element(:xpath, "//*[@id=\"form-assign-pool\"]/div/div/div/button").click
     
