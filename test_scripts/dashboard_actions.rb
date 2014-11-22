@@ -41,7 +41,7 @@ class DashboardActions < MiniTest::Test
     if !(ENV['PORT'].nil?)
       options[:port] = ENV['PORT']
     else
-      options[:port] = 2222
+      options[:port] = 22
     end
 
     Net::SSH.start(@test_data["host"], ENV['USER'], options) do |ssh|

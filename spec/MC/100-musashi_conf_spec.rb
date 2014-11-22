@@ -28,9 +28,9 @@ describe file('/etc/rsyslog.d/100-musashi.conf') do
   #       news.=crit;news.=err;news.=notice;\
   #       *.=debug;*.=info;\
   #       *.=notice;*.=warn       /dev/tty8
-  its(:content) { should match /daemon.[*];mail.[*];\\/ }
-  its(:content) { should match /news.err;\\/ }
-  its(:content) { should match /[*].=debug;[*].=info;\\/ }
-  its(:content) { should match /[*].=notice;[*].=warn\s+\|\/dev\/xconsole/ }
-  its(:content) { should match /^[*].[*] @(.*?)-mc.(.*?).(.*?):514/ }
+  its(:content) { should match /^daemon.[*];mail.[*];\\/ }
+  its(:content) { should match /^\s+news.err;\\/ }
+  its(:content) { should match /^\s+[*].=debug;[*].=info;\\/ }
+  its(:content) { should match /^\s+[*].=notice;[*].=warn\s+\|\/dev\/xconsole/ }
+  its(:content) { should match /^[*].[*] @(.*?).(.*?).(.*?):514/ }
 end

@@ -1,7 +1,23 @@
 require 'spec_helper'
 require 'rspec/its'
 
+describe file('/etc/diamond/collectors/CPUCollector.conf') do
+  its(:content) { should match /enabled = False/ }
+end
+
+describe file('/etc/diamond/collectors/DiskSpaceCollector.conf') do
+  its(:content) { should match /enabled = False/ }
+end
+
+describe file('/etc/diamond/collectors/DiskUsageCollector.conf') do
+  its(:content) { should match /enabled = False/ }
+end
+
 describe file('/etc/diamond/collectors/LoadAverageCollector.conf') do
+  its(:content) { should match /enabled = False/ }
+end
+
+describe file('/etc/diamond/collectors/MemoryCollector.conf') do
   its(:content) { should match /enabled = False/ }
 end
 
@@ -84,22 +100,33 @@ describe file('/etc/diamond/collectors/SockstatCollector.conf') do
 end
 
 describe file('/etc/diamond/collectors/Target_MusashiPingCollector.csv') do
-  its(:content) { should match /^(.*?)-cn(.*?),(.*?)-cn(.*?).musashi.ph/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph/ }
-  its(:content) { should match /^(.*?)-sn(.*?),(.*?)-sn(.*?).musashi.ph/ }
-  its(:content) { should match /^(.*?)-sn(.*?),(.*?)-sn(.*?).musashi.ph/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?)/ }
 end
 
 describe file('/etc/diamond/collectors/Target_MusashiPortCollector.csv') do
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,22,tcp/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,5000,tcp/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,35357,tcp/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,8774,tcp/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,8776,tcp/ }
-  its(:content) { should match /^(.*?)-mc,(.*?)-mc.musashi.ph,9292,tcp/ }
-  its(:content) { should match /^(.*?)-cn(.*?),(.*?)-cn(.*?).musashi.ph,22,tcp/ }
-  its(:content) { should match /^(.*?)-sn(.*?),(.*?)-sn(.*?).musashi.ph,22,tcp/ }
-  its(:content) { should match /^(.*?)-sn(.*?),(.*?)-sn(.*?).musashi.ph,22,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),22,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),5000,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),35357,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),8774,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),8776,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),9292,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),22,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),5000,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),35357,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),8774,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),8776,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),9292,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),22,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),22,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),22,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),22,tcp/ }
+  its(:content) { should match /^(.*?),(.*?).(.*?).(.*?),22,tcp/ }
 end
 
 describe file('/etc/diamond/collectors/VMStatCollector.conf') do

@@ -43,7 +43,7 @@ RSpec.configure do |c|
       if !(ENV['PORT'].nil?)
         options[:port] = ENV['PORT']
       else
-        options[:port] = 2222
+        options[:port] = 22
       end
       user    = ENV['USER']
       c.ssh   = Net::SSH.start(c.host, user, options)

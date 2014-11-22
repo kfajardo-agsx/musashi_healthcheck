@@ -4,7 +4,6 @@ require 'rspec/its'
 # CHECK SERVICES
 describe package('apache2')  do
   it { should be_installed }
-  it { should be_running   }
 end
 
 describe service('mysql') do
@@ -41,8 +40,7 @@ describe service('cinder-api') do
 end
 
 describe package('cinder-scheduler') do
-  it { should be_enabled   }
-  it { should be_running   }
+  it { should be_installed   }
 end
 
 describe service('nova-cert') do
@@ -71,6 +69,11 @@ describe service('nova-scheduler') do
 end
 
 describe service('nova-novncproxy') do
+  it { should be_enabled   }
+  it { should be_running   }
+end
+
+describe service('docker') do
   it { should be_enabled   }
   it { should be_running   }
 end

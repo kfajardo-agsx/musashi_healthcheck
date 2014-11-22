@@ -10,5 +10,7 @@ describe file('/etc/default/kdump-tools') do
 end
 
 describe file('/etc/default/grub.d/kexec-tools.cfg') do
-  its(:content) { should match /^GRUB_CMDLINE_LINUX_DEFAULT="$GRUB_CMDLINE_LINUX_DEFAULT crashkernel=4G-:512M"/ }
+  its(:content) { should match /GRUB[_]CMDLINE[_]LINUX[_]DEFAULT[=]["][$]GRUB_CMDLINE[_]LINUX[_]DEFAULT\s+crashkernel[=]4G[-][:]512M["]/ }
 end
+
+

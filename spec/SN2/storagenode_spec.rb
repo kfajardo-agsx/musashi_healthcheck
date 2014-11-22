@@ -6,25 +6,6 @@ describe service('diamond')  do
   it { should be_running }
 end
 
-describe service('supervisord') do
-  it { should be_running }
-end
-
-describe service('graphite') do
-  it { should be_running   }
-end
-
-describe service('gunicorn_django') do
-  it { should be_running }
-end
-
-describe service('honcho') do
-  it { should be_running }
-end
-
-describe service('gunicorn') do
-  it { should be_running   }
-end
 
 
 # CHECK DEFAULT PORTS
