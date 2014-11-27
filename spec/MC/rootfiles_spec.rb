@@ -3,20 +3,20 @@ require 'rspec/its'
 
 describe file('/root/backup_scripts/backup.sh') do
   its(:content) { should match /^TIMESTAMP=`date \S%y-%m-%d\w%H-%M-%S`/ }
-  its(:content) { should match /^umount \/musashi_backup/ }
+  #its(:content) { should match /^umount \/musashi_backup/ }
   #commented out two items below on v1.1.0
   #its(:content) { should match /^rbd unmap \/dev\/rbd1/ }
   #its(:content) { should match /^rbd map musashi_backup --pool musashi/ }
-  its(:content) { should match /^mount \/dev\/rbd\/musashi\/musashi_backup \/musashi_backup/ }
+  #its(:content) { should match /^mount \/dev\/rbd\/musashi\/musashi_backup \/musashi_backup/ }
   its(:content) { should match /^sh \/root\/backup_scripts\/openstack_backup.sh/ }
   its(:content) { should match /^sh \/root\/backup_scripts\/dashboard_backup.sh/ }
   its(:content) { should match /^tar -czvf musashi_backup-[$]TIMESTAMP.tar.gz \/musashi_backup/ }
-  its(:content) { should match /rsync -rvaz --progress musashi_backup-[$]TIMESTAMP.tar.gz deploy@(.*?).(.*?).(.*?):(~)\// }
-  its(:content) { should match /^rsync -rvaz --progress \/root\/backup_scripts\/restore.sh deploy@(.*?).(.*?).(.*?):(~)\// }
+  its(:content) { should match /rsync -rvaz --progress -e "ssh -p 22" musashi_backup-[$]TIMESTAMP.tar.gz deploy@(.*?).(.*?).(.*?):(~)\// }
+  its(:content) { should match /^rsync -rvaz --progress -e "ssh -p 22" \/root\/backup_scripts\/restore.sh deploy@(.*?).(.*?).(.*?):(~)\// }
 end
 
 describe file('/root/keystone_data.sh') do
-  its(:content) { should match /^HOSTNAME=(.*?)-mc.musashi.ph/ }
+  its(:content) { should match /^HOSTNAME=(.*?).(.*?).(.*?)/ }
   its(:content) { should match /^EMAIL=musashi.ph/ }
   its(:content) { should match /^ADMIN_PASS=(.*?)/ }
   its(:content) { should match /^DEMO_PASS=(.*?)/ }
@@ -25,11 +25,11 @@ describe file('/root/keystone_data.sh') do
   its(:content) { should match /^CINDER_PASS=(.*?)/ }
   its(:content) { should match /^CEILOMETER_PASS=(.*?)/ }
   its(:content) { should match /^export OS_SERVICE_TOKEN=(.*?)/ }
-  its(:content) { should match /^export OS_SERVICE_ENDPOINT=http:\/\/(.*?)-mc.musashi.ph:35357\/v2.0/ }
+  its(:content) { should match /^export OS_SERVICE_ENDPOINT=http:\/\/(.*?).(.*?).(.*?):35357\/v2.0/ }
   its(:content) { should match /^export OS_USERNAME=admin/ }
   its(:content) { should match /^export OS_PASSWORD=(.*?)/ }
   its(:content) { should match /^export OS_TENANT_NAME=admin/ }
-  its(:content) { should match /^export OS_AUTH_URL=http:\/\/(.*?)-mc.musashi.ph:35357\/v2.0/ }
+  its(:content) { should match /^export OS_AUTH_URL=http:\/\/(.*?).(.*?).(.*?):35357\/v2.0/ }
   its(:content) { should match /^su -s \/bin\/sh -c "keystone-manage db_sync" keystone/ }
   its(:content) { should match /^su -s \/bin\/sh -c "glance-manage db_sync" glance/ }
   its(:content) { should match /^su -s \/bin\/sh -c "nova-manage db sync" nova/ }
@@ -88,33 +88,41 @@ describe file('/root/keystonerc') do
   its(:content) { should match /^export OS_USERNAME=admin/ }
   its(:content) { should match /^export OS_PASSWORD=(.*?)/ }
   its(:content) { should match /^export OS_TENANT_NAME=admin/ }
-  its(:content) { should match /^export OS_AUTH_URL=http:\/\/\b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b:35357\/v2.0/ }
+  its(:content) { should match /^export OS_AUTH_URL=http:\/\/(.*?).(.*?).(.*?):35357\/v2.0/ }
 end
 
 describe file('/root/.my.cnf') do
-  its(:content) { should match /user=root/ }
+  its(:content) { should match /^user=root/ }
 end
 
 describe file('/root/.ssh/config') do
   #Hostname no longer available on v1.1.0
-  its(:content) { should match /Host github.com/ }
-  its(:content) { should match /User musashi-deploy/ }
-  its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
-  its(:content) { should match /Port 22/ }
-  its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /User deploy/ }
-  its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
-  its(:content) { should match /Port 22/ }
-  its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /User deploy/ }
-  its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
-  its(:content) { should match /Port 22/ }
-  its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /User deploy/ }
-  its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
-  its(:content) { should match /Port 22/ }
-  its(:content) { should match /Host \b(\w+)\b-\b(\w+)\b.\b(\w+)\b.\b(\w+)\b/ }
-  its(:content) { should match /User deploy/ }
-  its(:content) { should match /IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
-  its(:content) { should match /Port 22/ }
+  its(:content) { should match /^Host github.com/ }
+  its(:content) { should match /^User musashi-deploy/ }
+  its(:content) { should match /^IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
+  its(:content) { should match /^Port 22/ }
+  its(:content) { should match /^Host (.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^User deploy/ }
+  its(:content) { should match /^IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
+  its(:content) { should match /^Port 22/ }
+  its(:content) { should match /^Host (.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^User deploy/ }
+  its(:content) { should match /^IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
+  its(:content) { should match /^Port 22/ }
+  its(:content) { should match /^Host (.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^User deploy/ }
+  its(:content) { should match /^IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
+  its(:content) { should match /^Port 22/ }
+  its(:content) { should match /^Host (.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^User deploy/ }
+  its(:content) { should match /^IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
+  its(:content) { should match /^Port 22/ }
+  its(:content) { should match /^Host (.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^User deploy/ }
+  its(:content) { should match /^IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
+  its(:content) { should match /^Port 22/ }
+  its(:content) { should match /^Host (.*?).(.*?).(.*?)/ }
+  its(:content) { should match /^User deploy/ }
+  its(:content) { should match /^IdentityFile\s(~)\D\Dssh\Ddeployer_keys\Dpriv/ }
+  its(:content) { should match /^Port 22/ }
 end

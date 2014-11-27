@@ -6,5 +6,5 @@ describe command('whoami') do
 end
 
 describe file('/etc/sudoers') do
-	its(:content) { should match /ubuntu ALL=(ALL:ALL) NOPASSWD:ALL/ }
+	its(:content) { should match /^[%]ubuntu\s+ALL[=][(]ALL[:]ALL[)]\s+NOPASSWD[:]ALL/ }
 end
