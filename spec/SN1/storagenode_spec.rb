@@ -44,18 +44,6 @@ describe port (6789) do   # ceph-mon
   it { should be_listening.with('tcp') }
 end
 
-describe port (8300) do   # consul
-  it { should be_listening.with('tcp') }
-end
-
-describe port (8301) do   # consul
-  it { should be_listening.with('tcp') }
-end
-
-describe port (8302) do   # consul
-  it { should be_listening.with('tcp') }
-end
-
 describe port (6800) do   # ceph-osd
   it { should be_listening.with('tcp') }
 end
@@ -70,18 +58,6 @@ end
 
 describe port (6803) do   # ceph-osd
   it { should be_listening.with('tcp') }
-end
-
-describe port (8500) do   # consul
-  it { should be_listening.with('tcp6') }
-end
-
-describe port (8600) do   # consul
-  it { should be_listening }
-end
-
-describe port (8400) do   # consul
-  it { should be_listening }
 end
 
 describe port (2004) do   # docker: acaleph-frontend/graphite,graphite
